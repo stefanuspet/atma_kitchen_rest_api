@@ -16,6 +16,7 @@ class Karyawan extends Model
     public function presensi() : HasMany {
         return $this->hasMany(Presensi::class, "id_karyawan", "id");
     }
+    
     public function gaji() : HasMany {
         return $this->hasMany(Gaji::class, "id_karyawan", "id");
     }

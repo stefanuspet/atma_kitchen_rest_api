@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -15,12 +14,11 @@ class Poin extends Model
     public $timestamps = true;
     public $incrementing = true;
 
-    public function customer(): BelongsTo
-    {
-        return $this->belongsTo(Poin::class, "id_customer", "id");
+    public function customer(): BelongsTo {
+        return $this->belongsTo(Customer::class, "id_customer", "id");
     }
 
-    public function user(): BelongsToMany{
-        return $this->belongsToMany(User::class);
+    public function user(): BelongsToMany {
+        return $this->belongsToMany(User::class, 'pengelolaan_poin', 'id_poin', 'id_user');
     }
 }

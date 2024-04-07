@@ -14,8 +14,7 @@ class Penitip extends Model
     public $timestamps = true;
     public $incrementing = true;
 
-    public function produk_penitip(): HasMany
-    {
+    public function produk_penitip(): HasMany {
         return $this->hasMany(Produk_penitip::class, "id_penitip", "id");
     }
 }

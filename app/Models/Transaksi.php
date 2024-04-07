@@ -15,30 +15,27 @@ class Transaksi extends Model
     public $timestamps = true;
     public $incrementing = false;
 
-    public function produk_penitip(): BelongsToMany
-    {
-        return $this->belongsToMany(Produk_penitip::class);
+    public function produk_penitip(): BelongsToMany {
+        return $this->belongsToMany(Produk_penitip::class, 'detail_transaksi_produk_penitip', 'id_transaksi', 'id_produk_penitip');
     }
 
-    public function produk(): BelongsToMany
-    {
-        return $this->belongsToMany(Produk::class);
-    }
-    public function hampers(): BelongsToMany
-    {
-        return $this->belongsToMany(Hampers::class);
+    public function produk(): BelongsToMany {
+        return $this->belongsToMany(Produk::class, 'detali_transaksi_produk', 'id_transaksi', 'id_produk');
     }
 
-    public function customer(): BelongsTo
-    {
+    public function hampers(): BelongsToMany {
+        return $this->belongsToMany(Hampers::class, 'detail_transaksi_hampers', 'id_transaksi', 'id_hampers');
+    }
+
+    public function customer(): BelongsTo {
         return $this->belongsTo(Customer::class, "id_customer", "id");
     }
-    public function user(): BelongsTo
-    {
+
+    public function user(): BelongsTo {
         return $this->belongsTo(User::class, "id_user", "id");
     }
-    public function packaging(): BelongsTo
-    {
+
+    public function packaging(): BelongsTo {
         return $this->belongsTo(Packaging::class, "id_packaging", "id");
     }
 }

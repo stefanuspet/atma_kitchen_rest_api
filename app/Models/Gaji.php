@@ -13,12 +13,11 @@ class Gaji extends Model
     public $timestamps = true;
     public $incrementing = true;
 
-    public function karyawan(): BelongsTo
-    {
-        return $this->belongsTo(Gaji::class, "id_karyawan", "id");
+    public function karyawan(): BelongsTo {
+        return $this->belongsTo(Karyawan::class, "id_karyawan", "id");
     }
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(Gaji::class, "id_user", "id");
+
+    public function user(): BelongsTo {
+        return $this->belongsTo(User::class, "id_user", "id");
     }
 }

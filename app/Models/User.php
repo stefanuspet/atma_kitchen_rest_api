@@ -17,49 +17,43 @@ class User extends Model
     public $timestamps = true;
     public $incrementing = true;
 
-    public function jabatan(): BelongsTo
-    {
-        return $this->belongsTo(User::class, "id_jabatan", "id");
+    public function jabatan(): BelongsTo {
+        return $this->belongsTo(Jabatan::class, "id_jabatan", "id");
     }
 
-    public function gaji(): HasMany
-    {
+    public function gaji(): HasMany {
         return $this->hasMany(Gaji::class, "id_user", "id");
     }
-    public function hampers(): HasMany
-    {
+
+    public function hampers(): HasMany {
         return $this->hasMany(Hampers::class, "id_user", "id");
     }
-    public function produk_penitip(): HasMany
-    {
+
+    public function produk_penitip(): HasMany {
         return $this->hasMany(Produk_penitip::class, "id_user", "id");
     }
-    public function produk(): HasMany
-    {
+
+    public function produk(): HasMany {
         return $this->hasMany(Produk::class, "id_user", "id");
     }
 
-    public function pengeluaran_lain(): HasMany
-    {
+    public function pengeluaran_lain(): HasMany {
         return $this->hasMany(Pengeluaran_lain::class, "id_user", "id");
     }
-    public function transaksi(): HasMany
-    {
+
+    public function transaksi(): HasMany {
         return $this->hasMany(Transaksi::class, "id_user", "id");
     }
 
-    public function pengelolaan_saldo(): BelongsToMany
-    {
-        return $this->belongsToMany(Saldo::class);
+    public function saldo(): BelongsToMany {
+        return $this->belongsToMany(Saldo::class, 'pengelolaan_saldo', 'id_user', 'id_saldo');
     }
 
-    public function pengelolaan_poin(): BelongsToMany
-    {
-        return $this->belongsToMany(Poin::class);
+    public function poin(): BelongsToMany {
+        return $this->belongsToMany(Poin::class, 'pengelolaan_poin', 'id_user', 'id_poin');
     }
 
-    public function bahan_baku(): BelongsToMany
-    {
-        return $this->belongsToMany(Bahan_baku::class);
+    public function bahan_baku(): BelongsToMany {
+        return $this->belongsToMany(Bahan_baku::class, 'pembelian_bahan_baku', '', ' id_bahan_baku');
     }
 }

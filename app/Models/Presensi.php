@@ -14,6 +14,6 @@ class Presensi extends Model
     public $incrementing = true;
 
     public function karyawan() : BelongsTo {
-        return $this->belongsTo(Presensi::class, "id_jabatan", "id");
+        return $this->belongsTo(Karyawan::class, "id_karyawan", "id");
     }
 }

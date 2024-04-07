@@ -16,27 +16,22 @@ class Produk extends Model
     public $timestamps = true;
     public $incrementing = true;
 
-    public function bahan_baku(): BelongsToMany
-    {
-        return $this->belongsToMany(Bahan_baku::class);
+    public function bahan_baku(): BelongsToMany {
+        return $this->belongsToMany(Bahan_baku::class, 'resep', 'id_produk', 'id_bahan_baku');
     }
 
-    public function transaksi(): BelongsToMany
-    {
-        return $this->belongsToMany(Transaksi::class);
+    public function transaksi(): BelongsToMany {
+        return $this->belongsToMany(Transaksi::class, 'detali_transaksi_produk', 'id_produk', 'id_transaksi');
     }
-    public function hampers(): BelongsToMany
-    {
-        return $this->belongsToMany(Hampers::class);
+    public function hampers(): BelongsToMany {
+        return $this->belongsToMany(Hampers::class, 'produk_hampers', 'id_produk', 'id_hampers');
     }
 
-    public function packaging(): HasMany
-    {
+    public function packaging(): HasMany {
         return $this->hasMany(Packaging::class, "id_produk", "id");
     }
 
-    public function user(): BelongsTo
-    {
+    public function user(): BelongsTo {
         return $this->belongsTo(Produk::class, "id_user", "id");
     }
 }

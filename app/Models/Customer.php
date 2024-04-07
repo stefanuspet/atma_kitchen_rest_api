@@ -15,15 +15,18 @@ class Customer extends Model
     public $incrementing = true;
 
     public function alamat() : HasMany {
-        return $this->hasMany(Customer::class, "id_customer", "id");
+        return $this->hasMany(Alamat::class, "id_customer", "id");
     }
 
     public function saldo() : HasOne {
         return $this->hasOne(Saldo::class, "id_customer", "id");
     }
+
     public function poin() : HasOne {
-        return $this->hasOne(Customer::class, "id_customer", "id");
+        return $this->hasOne(Poin::class, "id_customer", "id");
     }
-
-
+    
+    public function transaksi() : HasMany {
+        return $this->hasMany(Transaksi::class, "id_customer", "id");
+    }
 }
