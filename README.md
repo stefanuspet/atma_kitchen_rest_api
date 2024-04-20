@@ -1,4 +1,4 @@
-# Atma Kitchen Rest APi
+# Atma Kitchen Rest API
 
 Ini adalah proyek Laravel REST API .
 
@@ -52,12 +52,18 @@ Sebelum Anda menjalankan proyek ini, pastikan sistem Anda memenuhi persyaratan b
     php artisan migrate
     ```
 
-8. **Jalankan Server Lokal**
+8. **Masukkan Dummy**
+
+    ```bash
+    php artisan db:seed
+    ```
+
+9. **Jalankan Server Lokal**
 
     ```bash
     php artisan serve
     ```
 
-9. **Akses Aplikasi**
+10. **Akses Aplikasi**
 
     Buka browser web Anda dan arahkan ke `http://localhost:8000`.

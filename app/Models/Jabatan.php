@@ -13,7 +13,13 @@ class Jabatan extends Model
     public $timestamps = true;
     public $incrementing = true;
 
-    public function user() : HasMany {
+    protected $fillable = [
+        "deskripsi_jabatan",
+        "nama_jabatan"
+    ];
+
+    public function user(): HasMany
+    {
         return $this->hasMany(User::class, "id_jabatan", "id");
     }
 }

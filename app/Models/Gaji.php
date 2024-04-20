@@ -13,11 +13,22 @@ class Gaji extends Model
     public $timestamps = true;
     public $incrementing = true;
 
-    public function karyawan(): BelongsTo {
+    protected $fillable = [
+        "honor_harian",
+        "bonus",
+        "total_gaji",
+        "tanggal_gaji",
+        "id_user",
+        "id_karyawan"
+    ];
+
+    public function karyawan(): BelongsTo
+    {
         return $this->belongsTo(Karyawan::class, "id_karyawan", "id");
     }
 
-    public function user(): BelongsTo {
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class, "id_user", "id");
     }
 }

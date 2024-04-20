@@ -11,4 +11,6 @@ class Resep extends Pivot
     protected $primaryKey = null;
     public $timestamps = true;
     public $incrementing = false;
+
+    protected $fillable = ["takaran"];
 }

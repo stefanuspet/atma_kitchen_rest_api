@@ -13,7 +13,14 @@ class Presensi extends Model
     public $timestamps = true;
     public $incrementing = true;
 
-    public function karyawan() : BelongsTo {
+    protected $fillable = [
+        "tanggal_presensi",
+        "Status",
+        "id_karyawan"
+    ];
+
+    public function karyawan(): BelongsTo
+    {
         return $this->belongsTo(Karyawan::class, "id_karyawan", "id");
     }
 }

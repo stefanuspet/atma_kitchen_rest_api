@@ -13,11 +13,19 @@ class Karyawan extends Model
     public $timestamps = true;
     public $incrementing = true;
 
-    public function presensi() : HasMany {
+    protected $fillable = [
+        "nama_karyawan",
+        "email_karyawan",
+        "notelp_karyawan",
+    ];
+
+    public function presensi(): HasMany
+    {
         return $this->hasMany(Presensi::class, "id_karyawan", "id");
     }
-    
-    public function gaji() : HasMany {
+
+    public function gaji(): HasMany
+    {
         return $this->hasMany(Gaji::class, "id_karyawan", "id");
     }
 }

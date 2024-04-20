@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string("nama_produk")->nullable(false);
             $table->double("harga_produk")->nullable(false);
             $table->integer("stok_produk")->nullable(false);
+            $table->string("image")->nullable(false);
             $table->unsignedBigInteger("id_user")->nullable(false);
             $table->timestamps();
 

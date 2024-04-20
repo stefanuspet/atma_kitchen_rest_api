@@ -13,11 +13,20 @@ class Bahan_baku extends Model
     public $timestamps = true;
     public $incrementing = true;
 
-    public function user(): BelongsToMany {
+    protected $fillable = [
+        'bahan_baku',
+        'jumlah_tersedia',
+        'satuan_bahan',
+        'harga_satuan'
+    ];
+
+    public function user(): BelongsToMany
+    {
         return $this->belongsToMany(User::class, 'pembelian_bahan_baku', 'id_bahan_baku', 'id_user');
     }
-    
-    public function produk(): BelongsToMany {
+
+    public function produk(): BelongsToMany
+    {
         return $this->belongsToMany(Produk::class, 'resep', 'id_bahan_baku', 'id_produk');
     }
 }

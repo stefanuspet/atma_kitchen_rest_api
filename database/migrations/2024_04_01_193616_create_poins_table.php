@@ -17,7 +17,6 @@ return new class extends Migration
             $table->unsignedBigInteger("id_customer")->nullable(false);
             $table->timestamps();
 
-
             $table->foreign("id_customer")->on("customers")->references("id");
         });
     }

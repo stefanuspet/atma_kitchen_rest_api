@@ -14,11 +14,18 @@ class Poin extends Model
     public $timestamps = true;
     public $incrementing = true;
 
-    public function customer(): BelongsTo {
+    protected $fillable = [
+        "jumlah_poin",
+        "id_customer"
+    ];
+
+    public function customer(): BelongsTo
+    {
         return $this->belongsTo(Customer::class, "id_customer", "id");
     }
 
-    public function user(): BelongsToMany {
+    public function user(): BelongsToMany
+    {
         return $this->belongsToMany(User::class, 'pengelolaan_poin', 'id_poin', 'id_user');
     }
 }

@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('reseps', function (Blueprint $table) {
             $table->unsignedBigInteger("id_produk")->nullable(false);
             $table->unsignedBigInteger("id_bahan_baku")->nullable(false);
+            $table->string("takaran")->nullable(false);
             $table->timestamps();
 
-            $table->foreign("id_produk")->on("produks")->references("id");
-            $table->foreign("id_bahan_baku")->on("bahan_bakus")->references("id");
+            $table->foreign("id_produk")->on("produks")->references("id")->onDelete("restrict");
+            $table->foreign("id_bahan_baku")->on("bahan_bakus")->references("id")->onDelete("restrict"  );
         });
     }
 

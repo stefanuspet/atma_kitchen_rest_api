@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->string("nama_customer", 100)->nullable(false)->unique("users_username_unique");
-            $table->string("email_customer", 100)->nullable(false)->unique("users_email_unique");
-            $table->string("notelp_customer", 14)->nullable(false)->unique("users_notelp_unique");
-            $table->string("password_customer", 200)->nullable(false)->unique("users_password_unique");
-            $table->string("token_customer", 100)->nullable(false)->unique("users_token_unique");
+            $table->string("nama_customer", 100)->nullable(false);
+            $table->string("email_customer", 100)->nullable(false)->unique("customers_email_unique");
+            $table->string("notelp_customer", 14)->nullable(false);
+            $table->string("password_customer", 200)->nullable(false);
+            $table->rememberToken();
             $table->timestamps();
         });
     }

@@ -15,19 +15,31 @@ class Hampers extends Model
     public $timestamps = true;
     public $incrementing = true;
 
-    public function transaksi(): BelongsToMany {
+    protected $fillable = [
+        "nama_hampers",
+        "harga_hampers",
+        "deskripsi_hampers",
+        "tanggal_pembuatan_hampers",
+        "stok_hampers",
+        "id_user",
+    ];
+    public function transaksi(): BelongsToMany
+    {
         return $this->belongsToMany(Transaksi::class, 'detail_transaksi_hampers', 'id_hampers', 'id_transaksi');
     }
 
-    public function produk(): BelongsToMany {
+    public function produk(): BelongsToMany
+    {
         return $this->belongsToMany(Produk::class, 'produk_hampers', 'id_hampers', 'id_produk');
     }
 
-    public function packaging(): HasMany {
+    public function packaging(): HasMany
+    {
         return $this->hasMany(Packaging::class, "id_hampers", "id");
     }
 
-    public function user(): BelongsTo {
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(Hampers::class, "id_user", "id");
     }
 }
