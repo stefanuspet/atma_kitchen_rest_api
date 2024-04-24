@@ -24,7 +24,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function forgotPassword(Request $request)
+    public function forgetPassword(Request $request)
     {
         $user = User::where('email', $request->email)->first();
         if (!$user) {

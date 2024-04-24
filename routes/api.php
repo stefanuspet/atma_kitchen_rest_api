@@ -19,9 +19,11 @@ Route::post('/customers', [AuthController::class, 'registerCustomer']);
 Route::post('/customers/login', [AuthController::class, 'loginCustomer']);
 Route::post('/users/login', [AuthController::class, 'loginUser']);
 // forgot password User
-Route::post('/users/forgotpassword', [UserController::class, 'forgotPassword']);
+Route::post('/users/forgetpassword', [UserController::class, 'forgetPassword']);
 // forgot password Customer
-Route::post('/customers/forgotpassword', [CustomerController::class, 'forgetPassword']);
+Route::post('/customers/requestforget', [CustomerController::class, 'forgetPassword']);
+// verify token
+Route::post('/customers/verify/{token}', [CustomerController::class, 'verify']);
 
 // ===============[ all User can access ] ===============
 Route::get('/produk', [ProdukController::class, 'index']);

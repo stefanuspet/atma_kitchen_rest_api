@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Email;
 use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -101,6 +104,23 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Login Success',
             'token' => $token
+        ], 200);
+    }
+
+    public function testing(Request $request)
+    {
+        $customer = Customer::where('email_customer', $request->email)->first();
+        $str = Str::random(100);
+        $details = [
+            'username' => $customer->nama_customer,
+            'website' => 'Atma Kitchen',
+            'datetime' => date('Y-m-d H:i:s'),
+            'url' => request()->getHttpHost() . '/reset/verify/' . $str
+        ];
+        Mail::to($request->email)->send(new Email($details));
+
+        return response()->json([
+            'message' => 'Email sent'
         ], 200);
     }
 }
