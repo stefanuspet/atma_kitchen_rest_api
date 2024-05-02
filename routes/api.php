@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('/customers', [AuthController::class, 'registerCustomer']);
 Route::post('/customers/login', [AuthController::class, 'loginCustomer']);
 Route::post('/users/login', [AuthController::class, 'loginUser']);
+// login all
+Route::post('/login', [AuthController::class, 'login']);
 // forgot password User
 Route::post('/users/forgetpassword', [UserController::class, 'forgetPassword']);
 // forgot password Customer

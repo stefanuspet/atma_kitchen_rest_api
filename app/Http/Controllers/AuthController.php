@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthController extends Controller
 {
@@ -121,6 +122,63 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Email sent'
+        ], 200);
+    }
+
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required'
+        ]);
+
+        $user = User::where('email_user', $request->email)->first();
+        $customer = Customer::where('email_customer', $request->email)->first();
+
+        if (!$user && !$customer) {
+            return response()->json([
+                'message' => 'Unauthorized',
+                'errors' => 'Email or Password invalid'
+            ], 401);
+        }
+
+        if ($user && !Hash::check($request->password, $user->password_user)) {
+            return response()->json([
+                'message' => 'Unauthorized',
+                'errors' => 'Email or Password invalid'
+            ], 401);
+        }
+
+        if ($customer && !Hash::check($request->password, $customer->password_customer)) {
+            return response()->json([
+                'message' => 'Unauthorized',
+                'errors' => 'Email or Password invalid'
+            ], 401);
+        }
+
+        $token = null;
+
+        if ($user) {
+            if ($user->id_jabatan == 1) {
+                $token = $user->createToken("User Login", ['ADMIN'])->plainTextToken;
+                $abilities = 'ADMIN';
+            } elseif ($user->id_jabatan == 2) {
+                $token = $user->createToken("User Login", ['MO'])->plainTextToken;
+                $abilities = 'MO';
+            } else {
+                $token = $user->createToken("User Login", ['OWNER'])->plainTextToken;
+                $abilities = 'OWNER';
+            }
+        } elseif ($customer) {
+            $token = $customer->createToken("Customer Login", ['Customer'])->plainTextToken;
+            $abilities = 'Customer';
+        }
+
+        return response()->json([
+            'message' => 'Login Success',
+            'token' => $token,
+            'abilities' => $abilities
         ], 200);
     }
 }
