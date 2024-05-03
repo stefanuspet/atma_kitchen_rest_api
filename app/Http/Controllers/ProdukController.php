@@ -29,16 +29,17 @@ class ProdukController extends Controller
 
         $user_id = Auth::user()->id;
 
-        $imageName = Str::uuid()->toString() . '.' . $request->file('image')->extension();
-        $imagePath = $request->file('image')->storeAs('public/img_product', $imageName);
-        $imageUrl = url(Storage::url($imagePath));
+        $uploadFolder = "produk";
+        $image = $request->file('image');
+        $image_upload_path = $image->store($uploadFolder, 'public');
+        $uploadedImageResponse = basename($image_upload_path);
 
         $produk = new Produk();
         $produk->nama_produk = $request->nama_produk;
         $produk->harga_produk = $request->harga_produk;
         $produk->stok_produk = $request->stok_produk;
         $produk->id_user = $user_id;
-        $produk->image = $imageUrl;
+        $produk->image = $uploadedImageResponse;
         $produk->save();
 
         return (new ProdukResource($produk))->setMessage('Product created successfully');
@@ -57,11 +58,14 @@ class ProdukController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $imagePath = 'public/img_product/' . basename($produk->image);
-            Storage::delete($imagePath);
-            $imageName = Str::uuid()->toString() . '.' . $request->file('image')->extension();
-            $imagePath = $request->file('image')->storeAs('public/img_product', $imageName);
-            $produk->image = url(Storage::url($imagePath));
+            $uploadFolder = "produk";
+            $image = $request->file('image');
+            $image_upload_path = $image->store($uploadFolder, 'public');
+            $uploadedImageResponse = basename($image_upload_path);
+
+            Storage::disk('public')->delete('produk/' . $produk->image);
+
+            $produk->image = $uploadedImageResponse;
         }
 
         $produk->nama_produk = $request->nama_produk;
