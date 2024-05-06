@@ -58,6 +58,8 @@ class ProdukController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
+            $imagePath = 'public/produk/' . basename($produk->image);
+            Storage::delete($imagePath);
             $uploadFolder = "produk";
             $image = $request->file('image');
             $image_upload_path = $image->store($uploadFolder, 'public');
@@ -66,6 +68,11 @@ class ProdukController extends Controller
             Storage::disk('public')->delete('produk/' . $produk->image);
 
             $produk->image = $uploadedImageResponse;
+
+            // delete old image
+        } else {
+            $img = $produk->image;
+            $produk->image = $img;
         }
 
         $produk->nama_produk = $request->nama_produk;
@@ -76,6 +83,15 @@ class ProdukController extends Controller
         $produk->save();
 
         return (new ProdukResource($produk))->setMessage('Product updated successfully');
+    }
+
+    // search product by name
+    public function search()
+    {
+        $produk = Produk::where('nama_produk', 'like', '%' . request('nama_produk') . '%')->get();
+        return response()->json([
+            'data' => $produk
+        ], 200);
     }
 
     public function show($id)

@@ -45,6 +45,7 @@ Route::middleware(['auth:sanctum', 'abilities:ADMIN'])->group(function () {
     Route::post('/produk/{id}', [ProdukController::class, 'update']);
     Route::get('/produk/{id}', [ProdukController::class, 'show']);
     Route::delete('/produk/{id}', [ProdukController::class, 'destroy']);
+    Route::get('/produk/search/{nama_produk}', [ProdukController::class, 'search']);
 
     // produk penitip
     Route::post('/produk_penitip', [ProdukPenitipController::class, 'store']);
