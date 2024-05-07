@@ -20,19 +20,12 @@ class KaryawanController extends Controller
         $validatedData = $request->validate([
             'nama_karyawan' => 'required',
             'email_karyawan' => 'required|email',
-            'no_telp_karyawan' => 'required|min:10|max:13'
+            'notelp_karyawan' => 'required|min:10|max:13'
         ]);
 
         $Karyawan = Karyawan::create($validatedData);
 
         return (new KaryawanResource($Karyawan))->setMessage('Karyawan created successfully');
-    }
-
-    public function show($id)
-    {
-        $karyawan = Karyawan::findOrFail($id);
-
-        return (new KaryawanResource($karyawan))->setMessage('Karyawan shown successfully');
     }
 
     public function update(Request $request, $id)
@@ -42,12 +35,32 @@ class KaryawanController extends Controller
         $request->validate([
             'nama_karyawan' => 'required',
             'email_karyawan' => 'required|email',
-            'no_telp_karyawan' => 'required|min:10|max:13'
+            'notelp_karyawan' => 'required|min:10|max:13'
         ]);
 
-        $Karyawan->update($request->only(['nama_karyawan', 'email_karyawan', 'no_telp_karyawan']));
+        $Karyawan->nama_karyawan = $request->nama_karyawan;
+        $Karyawan->email_karyawan = $request->email_karyawan;
+        $Karyawan->notelp_karyawan = $request->notelp_karyawan;
+        $Karyawan->save();
+
+        // $Karyawan = Karyawan::update($validatedData);
 
         return (new KaryawanResource($Karyawan))->setMessage('Karyawan updated successfully');
+    }
+
+    public function search()
+    {
+        $Karyawan = Karyawan::where('nama_karyawan', 'like', '%' . request('nama_karyawan') . '%')->get();
+        return response()->json([
+            'data' => $Karyawan
+        ], 200);
+    }
+
+    public function show($id)
+    {
+        $Karyawan = Karyawan::findOrFail($id);
+
+        return (new KaryawanResource($Karyawan))->setMessage('Karyawan shown successfully');
     }
 
     public function destroy($id)

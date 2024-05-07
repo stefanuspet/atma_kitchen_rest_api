@@ -26,7 +26,7 @@ class Produk extends Model
 
     public function bahan_baku(): BelongsToMany
     {
-        return $this->belongsToMany(Bahan_baku::class, 'resep', 'id_produk', 'id_bahan_baku');
+        return $this->belongsToMany(Bahan_baku::class, 'bahan_baku_produk', 'id_produk', 'id_bahan_baku');
     }
 
     public function transaksi(): BelongsToMany
@@ -46,5 +46,10 @@ class Produk extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, "id_user", "id");
+    }
+
+    public function resep(): BelongsTo
+    {
+        return $this->belongsTo(Resep::class, "id_resep", "id");
     }
 }

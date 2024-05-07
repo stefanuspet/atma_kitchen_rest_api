@@ -27,6 +27,11 @@ class Bahan_baku extends Model
 
     public function produk(): BelongsToMany
     {
-        return $this->belongsToMany(Produk::class, 'resep', 'id_bahan_baku', 'id_produk');
+        return $this->belongsToMany(Produk::class, 'bahan_baku_produk', 'id_bahan_baku', 'id_produk');
+    }
+
+    public function resep(): BelongsToMany
+    {
+        return $this->belongsTo(Resep::class, 'bahan_baku_resep', 'id_bahan_baku', 'id_resep');
     }
 }

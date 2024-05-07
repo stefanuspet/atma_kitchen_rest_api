@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reseps', function (Blueprint $table) {
-            $table->id();
-            $table->string("takaran")->nullable(false);
-            $table->unsignedBigInteger("id_produk")->nullable(false);
+        Schema::create('bahan_baku_reseps', function (Blueprint $table) {
             $table->unsignedBigInteger("id_bahan_baku")->nullable(false);
+            $table->unsignedBigInteger("id_resep")->nullable(false);
             $table->timestamps();
 
-            $table->foreign("id_produk")->on("produks")->references("id");
             $table->foreign("id_bahan_baku")->on("bahan_bakus")->references("id");
+            $table->foreign("id_resep")->on("reseps")->references("id");
         });
     }
 
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reseps');
+        Schema::dropIfExists('bahan_baku_reseps');
     }
 };

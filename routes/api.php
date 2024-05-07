@@ -11,6 +11,7 @@ use App\Http\Controllers\PoinController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProdukPenitipController;
+use App\Http\Controllers\ResepController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -66,6 +67,13 @@ Route::middleware(['auth:sanctum', 'abilities:ADMIN'])->group(function () {
     Route::put('/poins/{id}', [PoinController::class, 'update']);
     Route::get('/poins/{id}', [PoinController::class, 'show']);
     Route::delete('/poins/{id}', [PoinController::class, 'destroy']);
+
+    // resep
+    Route::get('/resep', [ResepController::class, 'index']);
+    Route::post('/resep', [ResepController::class, 'store']);
+    Route::put('/resep/{id}', [ResepController::class, 'update']);
+    Route::get('/resep/{id}', [ResepController::class, 'show']);
+    Route::delete('/resep/{id}', [ResepController::class, 'destroy']);
 });
 
 // ===============[  role : Manager ] ===============
