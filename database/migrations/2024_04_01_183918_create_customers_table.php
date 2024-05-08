@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string("email_customer", 100)->nullable(false)->unique("customers_email_unique");
             $table->string("notelp_customer", 14)->nullable(false);
             $table->string("password_customer", 200)->nullable(false);
-            $table->rememberToken();
             $table->timestamps();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->rememberToken();
         });
     }
 
