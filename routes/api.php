@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BahanBakuController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\GajiController;
 use App\Http\Controllers\HampersController;
@@ -47,6 +48,14 @@ Route::middleware(['auth:sanctum', 'abilities:ADMIN'])->group(function () {
     Route::get('/produk/{id}', [ProdukController::class, 'show']);
     Route::delete('/produk/{id}', [ProdukController::class, 'destroy']);
     Route::get('/produk/search/{nama_produk}', [ProdukController::class, 'search']);
+
+    // bahan baku
+    Route::get('/bahanbaku', [BahanBakuController::class, 'index']);
+    Route::post('/bahanbaku', [BahanBakuController::class, 'store']);
+    Route::put('/bahanbaku/{id}', [BahanBakuController::class, 'update']);
+    Route::get('/bahanbaku/{id}', [BahanBakuController::class, 'show']);
+    Route::delete('/bahanbaku/{id}', [BahanBakuController::class, 'destroy']);
+    Route::get('/bahanbaku/search/{bahan_baku}', [BahanBakuController::class, 'search']);
 
     // produk penitip
     Route::post('/produk_penitip', [ProdukPenitipController::class, 'store']);

@@ -18,10 +18,10 @@ class BahanBakuController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nama_bahan_baku' => 'required',
-            'stok_bahan_baku' => 'required',
-            'satuan_bahan_baku' => 'required',
-            'harga_bahan_baku' => 'required'
+            'bahan_baku' => 'required',
+            'jumlah_tersedia' => 'required',
+            'satuan_bahan' => 'required',
+            'harga_satuan' => 'required'
         ]);
 
         $bahan_baku = Bahan_baku::create($validatedData);
@@ -43,13 +43,13 @@ class BahanBakuController extends Controller
         $bahan_baku = Bahan_baku::findOrFail($id);
 
         $request->validate([
-            'nama_bahan_baku' => 'required',
-            'stok_bahan_baku' => 'required',
-            'satuan_bahan_baku' => 'required',
-            'harga_bahan_baku' => 'required'
+            'bahan_baku' => 'required',
+            'jumlah_tersedia' => 'required',
+            'satuan_bahan' => 'required',
+            'harga_satuan' => 'required'
         ]);
 
-        $bahan_baku->update($request->only(['nama_bahan_baku', 'stok_bahan_baku', 'satuan_bahan_baku', 'harga_bahan_baku']));
+        $bahan_baku->update($request->only(['bahan_baku', 'jumlah_tersedia', 'satuan_bahan', 'harga_satuan']));
 
         return (new BahanBakuResource($bahan_baku))->setMessage('Bahan baku updated successfully');
     }
@@ -63,5 +63,12 @@ class BahanBakuController extends Controller
         return response()->json([
             'message' => 'Bahan baku deleted successfully'
         ]);
+    }
+    public function search()
+    {
+        $produk = Bahan_baku::where('bahan_baku', 'like', '%' . request('bahan_baku') . '%')->get();
+        return response()->json([
+            'data' => $produk
+        ], 200);
     }
 }
