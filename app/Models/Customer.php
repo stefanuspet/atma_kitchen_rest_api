@@ -22,6 +22,8 @@ class Customer extends Authenticatable
         'email_customer',
         'notelp_customer',
         "password_customer",
+        'verify_key',
+        'active',
     ];
 
     protected $hidden = [
