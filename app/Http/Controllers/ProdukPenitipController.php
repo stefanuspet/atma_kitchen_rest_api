@@ -29,9 +29,15 @@ class ProdukPenitipController extends Controller
 
         $user_id = Auth::user()->id;
 
-        $imageName = Str::uuid()->toString() . '.' . $request->file('gambar_produk_penitip')->extension();
-        $imagePath = $request->file('gambar_produk_penitip')->storeAs('public/img_product', $imageName);
-        $imageUrl = url(Storage::url($imagePath));
+        $uploadFolder = "produk_penitip";
+        $image = $request->file('gambar_produk_penitip');
+        $image_upload_path = $image->store($uploadFolder, 'public');
+        $uploadedImageResponse = basename($image_upload_path);
+
+
+        // $imageName = Str::uuid()->toString() . '.' . $request->file('gambar_produk_penitip')->extension();
+        // $imagePath = $request->file('gambar_produk_penitip')->storeAs('public/img_product', $imageName);
+        // $imageUrl = url(Storage::url($imagePath));
 
         $produk_penitip = new Produk_penitip();
         $produk_penitip->nama_produk_penitip = $request->nama_produk_penitip;
@@ -39,7 +45,7 @@ class ProdukPenitipController extends Controller
         $produk_penitip->stok_produk_penitip = $request->stok_produk_penitip;
         $produk_penitip->id_penitip = $request->id_penitip;
         $produk_penitip->id_user = $user_id;
-        $produk_penitip->gambar_produk_penitip = $imageUrl;
+        $produk_penitip->gambar_produk_penitip = $uploadedImageResponse;
         $produk_penitip->save();
 
         return (new DetailProdukPenitipResource($produk_penitip))->setMessage('Produk_penitip created successfully');
@@ -59,12 +65,23 @@ class ProdukPenitipController extends Controller
         ]);
 
         if ($request->hasFile('gambar_produk_penitip')) {
-            $imagePath = 'public/img_product/' . basename($produk_penitip->gambar_produk_penitip);
-            Storage::delete($imagePath);
-            $imageName = Str::uuid()->toString() . '.' . $request->file('gambar_produk_penitip')->extension();
-            $imagePath = $request->file('gambar_produk_penitip')->storeAs('public/img_product', $imageName);
-            $produk_penitip->gambar_produk_penitip = url(Storage::url($imagePath));
+            // delete old image
+            $oldImagePath = 'public/produk_penitip/' . basename($produk_penitip->gambar_produk_penitip);
+            Storage::delete($oldImagePath);
+
+            $uploadFolder = "produk_penitip";
+            $image = $request->file('gambar_produk_penitip');
+            $image_upload_path = $image->store($uploadFolder, 'public');
+            $uploadedImageResponse = basename($image_upload_path);
+            Storage::disk('public')->delete('produk_penitip/' . $produk_penitip->gambar_produk_penitip);
+
+
+            $produk_penitip->gambar_produk_penitip = $uploadedImageResponse;
+        } else {
+            $img = $produk_penitip->gambar_produk_penitip;
+            $produk_penitip->gambar_produk_penitip = $img;
         }
+
 
         $produk_penitip->nama_produk_penitip = $request->nama_produk_penitip;
         $produk_penitip->harga_produk_penitip = $request->harga_produk_penitip;
@@ -73,19 +90,19 @@ class ProdukPenitipController extends Controller
         $produk_penitip->id_user = $user_id;
         $produk_penitip->save();
 
-        return (new DetailProdukPenitipResource($produk_penitip))->setMessage('Produk_penitip updated successfully');
+        return (new ProdukPenitipResource($produk_penitip))->setMessage('Produk_penitip updated successfully');
     }
 
     public function show($id)
     {
         $produk_penitip = Produk_penitip::findOrFail($id);
-        return (new DetailProdukPenitipResource($produk_penitip))->setMessage('Produk_penitip shown successfully');
+        return (new ProdukPenitipResource($produk_penitip))->setMessage('Produk_penitip shown successfully');
     }
 
     public function destroy($id)
     {
         $produk_penitip = Produk_penitip::findOrFail($id);
-        $imagePath = 'public/img_product/' . basename($produk_penitip->gambar_produk_penitip);
+        $imagePath = 'public/produk_penitip/' . basename($produk_penitip->gambar_produk_penitip);
         Storage::delete($imagePath);
         $produk_penitip->delete();
         return response()->json(['message' => 'Produk_penitip deleted successfully']);

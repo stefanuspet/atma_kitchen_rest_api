@@ -24,13 +24,12 @@ class ProdukPenitipResource extends JsonResource
     public function toArray(Request $request): array
     {
         $response = [
-            'data' => [
-                'id_produk_penitip' => $this->id,
-                'nama_produk' => $this->nama_produk,
-                'harga_produk' => $this->harga_produk,
-                'stok_produk' => $this->stok_produk,
-                'gambar_produk' => $this->gambar_produk,
-            ]
+            'id_produk_penitip' => $this->id,
+            'nama_produk' => $this->nama_produk_penitip,
+            'harga_produk' => $this->harga_produk_penitip,
+            'stok_produk' => $this->stok_produk_penitip,
+            'gambar_produk' => $this->gambar_produk_penitip,
+            'penitip' => $this->penitip->nama_penitip,
         ];
 
         if ($this->message) {

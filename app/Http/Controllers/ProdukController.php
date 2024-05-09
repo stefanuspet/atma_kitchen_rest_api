@@ -58,8 +58,10 @@ class ProdukController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $imagePath = 'public/produk/' . basename($produk->image);
-            Storage::delete($imagePath);
+            // delete old image
+            $oldImagePath = 'public/produk/' . basename($produk->image);
+            Storage::delete($oldImagePath);
+            
             $uploadFolder = "produk";
             $image = $request->file('image');
             $image_upload_path = $image->store($uploadFolder, 'public');
@@ -68,8 +70,6 @@ class ProdukController extends Controller
             Storage::disk('public')->delete('produk/' . $produk->image);
 
             $produk->image = $uploadedImageResponse;
-
-            // delete old image
         } else {
             $img = $produk->image;
             $produk->image = $img;
@@ -103,8 +103,8 @@ class ProdukController extends Controller
     public function destroy($id)
     {
         $produk = Produk::findOrFail($id);
-        $imagePath = 'public/img_product/' . basename($produk->image);
-        Storage::delete($imagePath);
+        $oldImagePath = 'public/produk/' . basename($produk->image);
+        Storage::delete($oldImagePath);
         $produk->delete();
 
         return response()->json([

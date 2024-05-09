@@ -58,6 +58,7 @@ Route::middleware(['auth:sanctum', 'abilities:ADMIN'])->group(function () {
     Route::get('/bahanbaku/search/{bahan_baku}', [BahanBakuController::class, 'search']);
 
     // produk penitip
+    Route::get('/penitip_search', [PenitipController::class, 'index']);
     Route::post('/produk_penitip', [ProdukPenitipController::class, 'store']);
     Route::put('/produk_penitip/{id}', [ProdukPenitipController::class, 'update']);
     Route::get('/produk_penitip/{id}', [ProdukPenitipController::class, 'show']);
@@ -93,6 +94,7 @@ Route::middleware(['auth:sanctum', 'abilities:MO'])->group(function () {
     Route::put('/karyawan/{id}', [KaryawanController::class, 'update']);
     Route::get('/karyawan/{id}', [KaryawanController::class, 'show']);
     Route::delete('/karyawan/{id}', [KaryawanController::class, 'destroy']);
+    Route::get('/karyawan/search/{nama_karyawan}', [KaryawanController::class, 'search']);
 
     // penitip
     Route::get('/penitip', [PenitipController::class, 'index']);
