@@ -60,7 +60,7 @@ class ProdukPenitipController extends Controller
             "nama_produk_penitip" => "required",
             "harga_produk_penitip" => "required",
             "stok_produk_penitip" => "required",
-            "gambar_produk_penitip" => "required",
+            "gambar_produk_penitip" => "image|mimes:jpeg,png,jpg,gif|max:2048",
             "id_penitip" => "required",
         ]);
 

@@ -60,7 +60,7 @@ Route::middleware(['auth:sanctum', 'abilities:ADMIN'])->group(function () {
     // produk penitip
     Route::get('/penitip_search', [PenitipController::class, 'index']);
     Route::post('/produk_penitip', [ProdukPenitipController::class, 'store']);
-    Route::put('/produk_penitip/{id}', [ProdukPenitipController::class, 'update']);
+    Route::post('/produk_penitip/{id}', [ProdukPenitipController::class, 'update']);
     Route::get('/produk_penitip/{id}', [ProdukPenitipController::class, 'show']);
     Route::delete('/produk_penitip/{id}', [ProdukPenitipController::class, 'destroy']);
 

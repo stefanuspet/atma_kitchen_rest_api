@@ -30,6 +30,7 @@ class ProdukPenitipResource extends JsonResource
             'stok_produk' => $this->stok_produk_penitip,
             'gambar_produk' => $this->gambar_produk_penitip,
             'penitip' => $this->penitip->nama_penitip,
+            'id_penitip' => $this->id_penitip,
         ];
 
         if ($this->message) {
