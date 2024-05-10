@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\DetailProdukPenitipResource;
 use App\Http\Resources\ProdukPenitipResource;
+use App\Models\Penitip;
 use App\Models\Produk_penitip;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -106,5 +107,20 @@ class ProdukPenitipController extends Controller
         Storage::delete($imagePath);
         $produk_penitip->delete();
         return response()->json(['message' => 'Produk_penitip deleted successfully']);
+    }
+
+    public function search()
+    {
+        $produk_penitip = Produk_penitip::where('nama_produk_penitip', 'like', '%' . request('nama_produk_penitip') . '%')->get();
+        $id_penitip = $produk_penitip->pluck("id_penitip")->toArray();
+        $penitip = Penitip::whereIn('id', $id_penitip)->get()->keyBy('id');
+        $produk_penitip->transform(function ($produk_penitip) use ($penitip) {
+            $produk_penitip->nama_penitip = $penitip[$produk_penitip->id_penitip]->nama_penitip;
+            return $produk_penitip;
+        });
+    
+        return response()->json([
+            'data' => $produk_penitip
+        ], 200);
     }
 }

@@ -14,10 +14,11 @@ class Bahan_baku extends Model
     public $incrementing = true;
 
     protected $fillable = [
-        'bahan_baku',
+        'nama_bahan_baku',
         'jumlah_tersedia',
         'satuan_bahan',
-        'harga_satuan'
+        'harga_satuan',
+        "id_user",
     ];
 
     public function user(): BelongsToMany
@@ -32,6 +33,6 @@ class Bahan_baku extends Model
 
     public function resep(): BelongsToMany
     {
-        return $this->belongsTo(Resep::class, 'bahan_baku_resep', 'id_bahan_baku', 'id_resep');
+        return $this->belongsToMany(Resep::class, 'bahan_baku_resep', 'id_bahan_baku', 'id_resep');
     }
 }

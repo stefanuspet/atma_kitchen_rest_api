@@ -63,6 +63,7 @@ Route::middleware(['auth:sanctum', 'abilities:ADMIN'])->group(function () {
     Route::post('/produk_penitip/{id}', [ProdukPenitipController::class, 'update']);
     Route::get('/produk_penitip/{id}', [ProdukPenitipController::class, 'show']);
     Route::delete('/produk_penitip/{id}', [ProdukPenitipController::class, 'destroy']);
+    Route::get('/produk_penitip/search/{nama_produk_penitip}', [ProdukPenitipController::class, "search"]);
 
     // hampers
     Route::get('/hampers', [HampersController::class, 'index']);
@@ -79,11 +80,14 @@ Route::middleware(['auth:sanctum', 'abilities:ADMIN'])->group(function () {
     Route::delete('/poins/{id}', [PoinController::class, 'destroy']);
 
     // resep
+    Route::get('/produk_search', [ProdukController::class, 'index']);
+    Route::get('/bahan_baku_search', [BahanBakuController::class, 'index']);
     Route::get('/resep', [ResepController::class, 'index']);
     Route::post('/resep', [ResepController::class, 'store']);
     Route::put('/resep/{id}', [ResepController::class, 'update']);
     Route::get('/resep/{id}', [ResepController::class, 'show']);
     Route::delete('/resep/{id}', [ResepController::class, 'destroy']);
+    Route::get('/resep/search/{nama_produk}', [ProdukPenitipController::class, "search"]);
 });
 
 // ===============[  role : Manager ] ===============

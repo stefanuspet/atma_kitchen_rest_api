@@ -25,7 +25,7 @@ class BahanBakuResource extends JsonResource
     {
         $response = [
             'id_bahan_baku' => $this->id,
-            'bahan_baku' => $this->bahan_baku,
+            'nama_bahan_baku' => $this->nama_bahan_baku,
             'jumlah_tersedia' => $this->jumlah_tersedia,
             'satuan_bahan' => $this->satuan_bahan,
             'harga_satuan' => $this->harga_satuan,
