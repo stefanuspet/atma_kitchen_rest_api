@@ -28,8 +28,9 @@ class ResepResource extends JsonResource
             'takaran' => $this->takaran,
             'nama_produk' => $this->produk->nama_produk,
             'bahan_baku' => $this->bahan_baku->nama_bahan_baku,
-            'id_produk' => $this->id,
-            'id_bahan_baku' => $this->id,
+            'id_produk' => $this->id_produk,
+            'id_bahan_baku' => $this->id_bahan_baku,
+            'id_user' => $this->id_user,
         ];
 
         if ($this->message) {

@@ -14,7 +14,10 @@ class ResepController extends Controller
     // index
     public function index()
     {
-        return ResepResource::collection(Resep::all());
+        // return ResepResource::collection(Resep::all());
+        return response()->json([
+            'data' => Resep::all()
+        ]);
     }
 
     // store
@@ -35,7 +38,11 @@ class ResepController extends Controller
         $resep->id_user = $user_id;
         $resep->save();
 
-        return (new ResepResource($resep))->setMessage('Resep created successfully');
+        // return (new ResepResource($resep))->setMessage('Resep created successfully');
+        return response()->json([
+            'message' => 'Resep created successfully',
+            'data' => $resep
+        ]);
     }
 
     // show
@@ -43,7 +50,11 @@ class ResepController extends Controller
     {
         $resep = Resep::findOrFail($id);
 
-        return (new ResepResource($resep))->setMessage('Resep shown successfully');
+        // return (new ResepResource($resep))->setMessage('Resep shown successfully');
+        return response()->json([
+            'message' => 'Resep shown successfully',
+            'data' => $resep
+        ]);
     }
 
     // update
@@ -64,7 +75,11 @@ class ResepController extends Controller
         $resep->id_user = $user_id;
         $resep->save();
 
-        return (new ResepResource($resep))->setMessage('Resep updated successfully');
+        // return (new ResepResource($resep))->setMessage('Resep updated successfully');
+        return response()->json([
+            'message' => 'Resep updated successfully',
+            'data' => $resep
+        ]);
     }
 
     // destroy
@@ -90,7 +105,7 @@ class ResepController extends Controller
             $resep->nama_bahan_baku = $bahan_baku[$resep->id_bahan_baku]->nama_bahan_baku;
             return $resep;
         });
-    
+
         return response()->json([
             'data' => $resep
         ], 200);
