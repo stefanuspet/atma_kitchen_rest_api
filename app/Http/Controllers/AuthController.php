@@ -13,6 +13,7 @@ use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\PersonalAccessToken;
+use Session;
 
 class AuthController extends Controller
 {
@@ -23,15 +24,27 @@ class AuthController extends Controller
                 'nama_customer' => 'required|max:100',
                 'email_customer' => 'required|email|max:100|unique:customers',
                 'password_customer' => ['required', 'max:100', Password::min(8)],
-                'notelp_customer' => 'required|max:14',
+                'notelp_customer' => 'required|digits_between:11,14',
             ]);
 
+            $str = Str::random(100);
             $customer = Customer::create([
                 'nama_customer' => $request->nama_customer,
                 'email_customer' => $request->email_customer,
                 'password_customer' => Hash::make($request->password_customer),
                 'notelp_customer' => $request->notelp_customer,
             ]);
+
+            $details = [
+                'username' => $customer->nama_customer,
+                'website' => 'Atma Kitchen',
+                'datetime' => date('Y-m-d H:i:s'),
+                'url' => request()->getHttpHost() . '/api/customers/verify/' . $str
+            ];
+
+            // Mail::to($request->email)->send(new Email($details));
+
+            // Session::flash('message', 'Link verifikasi telah dikirim ke email anda. Silahkan cek email anda untuk mengaktifkan akun.');
 
             return response()->json([
                 'customer' => $customer,
@@ -126,7 +139,7 @@ class AuthController extends Controller
     }
 
 
-    public function login(Request $request)
+    public function   login(Request $request)
     {
         $request->validate([
             'email' => 'required',

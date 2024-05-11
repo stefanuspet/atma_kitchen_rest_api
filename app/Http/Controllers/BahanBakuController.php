@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\BahanBakuResource;
 use App\Models\Bahan_baku;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BahanBakuController extends Controller
 {
@@ -17,14 +18,23 @@ class BahanBakuController extends Controller
     // store
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'bahan_baku' => 'required',
+        $request->validate([
+            'nama_bahan_baku' => 'required',
             'jumlah_tersedia' => 'required',
             'satuan_bahan' => 'required',
             'harga_satuan' => 'required'
         ]);
 
-        $bahan_baku = Bahan_baku::create($validatedData);
+        $user_id = Auth::user()->id;
+
+        // $bahan_baku = Bahan_baku::create($validatedData);
+        $bahan_baku = new Bahan_baku();
+        $bahan_baku->nama_bahan_baku = $request->nama_bahan_baku;
+        $bahan_baku->jumlah_tersedia = $request->jumlah_tersedia;
+        $bahan_baku->satuan_bahan = $request->satuan_bahan;
+        $bahan_baku->harga_satuan = $request->harga_satuan;
+        $bahan_baku->id_user = $user_id;
+        $bahan_baku->save();
 
         return (new BahanBakuResource($bahan_baku))->setMessage('Bahan baku created successfully');
     }
@@ -33,23 +43,29 @@ class BahanBakuController extends Controller
     public function show($id)
     {
         $bahan_baku = Bahan_baku::findOrFail($id);
-
         return (new BahanBakuResource($bahan_baku))->setMessage('Bahan baku shown successfully');
     }
 
     // update
     public function update(Request $request, $id)
     {
+        $user_id = Auth::user()->id;
         $bahan_baku = Bahan_baku::findOrFail($id);
 
         $request->validate([
-            'bahan_baku' => 'required',
+            'nama_bahan_baku' => 'required',
             'jumlah_tersedia' => 'required',
             'satuan_bahan' => 'required',
             'harga_satuan' => 'required'
         ]);
 
-        $bahan_baku->update($request->only(['bahan_baku', 'jumlah_tersedia', 'satuan_bahan', 'harga_satuan']));
+        // $bahan_baku->update($request->only(['nama_bahan_baku', 'jumlah_tersedia', 'satuan_bahan', 'harga_satuan']));
+        $bahan_baku->nama_bahan_baku = $request->nama_bahan_baku;
+        $bahan_baku->jumlah_tersedia = $request->jumlah_tersedia;
+        $bahan_baku->satuan_bahan = $request->satuan_bahan;
+        $bahan_baku->harga_satuan = $request->harga_satuan;
+        $bahan_baku->id_user = $user_id;
+        $bahan_baku->save();
 
         return (new BahanBakuResource($bahan_baku))->setMessage('Bahan baku updated successfully');
     }
@@ -66,9 +82,9 @@ class BahanBakuController extends Controller
     }
     public function search()
     {
-        $produk = Bahan_baku::where('bahan_baku', 'like', '%' . request('bahan_baku') . '%')->get();
+        $bahan_baku = Bahan_baku::where('nama_bahan_baku', 'like', '%' . request('nama_bahan_baku') . '%')->get();
         return response()->json([
-            'data' => $produk
+            'data' => $bahan_baku
         ], 200);
     }
 }

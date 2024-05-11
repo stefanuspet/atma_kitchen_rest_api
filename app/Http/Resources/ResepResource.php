@@ -26,8 +26,10 @@ class ResepResource extends JsonResource
         $response = [
             'id_resep' => $this->id,
             'takaran' => $this->takaran,
-            'id_produk' => $this->id_produk,
-            'id_bahan_baku' => $this->id_bahan_baku,
+            'nama_produk' => $this->produk->nama_produk,
+            'bahan_baku' => $this->bahan_baku->nama_bahan_baku,
+            'id_produk' => $this->id,
+            'id_bahan_baku' => $this->id,
         ];
 
         if ($this->message) {

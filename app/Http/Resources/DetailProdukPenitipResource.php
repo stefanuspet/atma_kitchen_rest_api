@@ -25,10 +25,10 @@ class DetailProdukPenitipResource extends JsonResource
         $response = [
             'data' => [
                 'id_produk_penitip' => $this->id,
-                'nama_produk' => $this->nama_produk,
-                'harga_produk' => $this->harga_produk,
-                'stok_produk' => $this->stok_produk,
-                'gambar_produk' => $this->gambar_produk,
+                'nama_produk' => $this->nama_produk_penitip,
+                'harga_produk' => $this->harga_produk_penitip,
+                'stok_produk' => $this->stok_produk_penitip,
+                'gambar_produk' => $this->gambar_produk_penitip,
                 'id_penitip' => $this->id_penitip,
                 "nama_penitip" => $this->penitip->nama_penitip,
             ]

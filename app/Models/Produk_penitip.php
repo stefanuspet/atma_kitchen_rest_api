@@ -23,7 +23,6 @@ class Produk_penitip extends Model
         "id_user"
     ];
 
-
     public function penitip(): BelongsTo
     {
         return $this->belongsTo(Penitip::class, "id_penitip", "id");

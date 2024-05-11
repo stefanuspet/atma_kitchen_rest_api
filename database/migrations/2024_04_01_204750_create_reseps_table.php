@@ -16,10 +16,11 @@ return new class extends Migration
             $table->string("takaran")->nullable(false);
             $table->unsignedBigInteger("id_produk")->nullable(false);
             $table->unsignedBigInteger("id_bahan_baku")->nullable(false);
+            $table->unsignedBigInteger("id_user")->nullable(false);
             $table->timestamps();
 
-            $table->foreign("id_produk")->on("produks")->references("id");
-            $table->foreign("id_bahan_baku")->on("bahan_bakus")->references("id");
+            $table->foreign("id_produk")->on("produks")->references("id")->onDelete("cascade");
+            $table->foreign("id_bahan_baku")->on("bahan_bakus")->references("id")->onDelete("cascade");
         });
     }
 

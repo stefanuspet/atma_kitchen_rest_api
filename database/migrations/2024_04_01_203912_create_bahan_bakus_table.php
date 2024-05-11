@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('bahan_bakus', function (Blueprint $table) {
             $table->id();
-            $table->string("bahan_baku")->nullable(false);
+            $table->string("nama_bahan_baku")->nullable(false);
             $table->integer("jumlah_tersedia")->nullable(false);
             $table->string("satuan_bahan")->nullable(false);
             $table->double("harga_satuan")->nullable(false);
+            $table->unsignedBigInteger("id_user")->nullable(false);
             $table->timestamps();
+
+            $table->foreign("id_user")->on("users")->references("id");
         });
     }
 
