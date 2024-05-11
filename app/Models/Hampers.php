@@ -30,7 +30,7 @@ class Hampers extends Model
 
     public function produk(): BelongsToMany
     {
-        return $this->belongsToMany(Produk::class, 'produk_hampers', 'id_hampers', 'id_produk');
+        return $this->belongsToMany(Produk::class)->using(Produk_hampers::class);
     }
 
     public function packaging(): HasMany

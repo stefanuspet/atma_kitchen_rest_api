@@ -71,6 +71,9 @@ Route::middleware(['auth:sanctum', 'abilities:ADMIN'])->group(function () {
     Route::put('/hampers/{id}', [HampersController::class, 'update']);
     Route::get('/hampers/{id}', [HampersController::class, 'show']);
     Route::delete('/hampers/{id}', [HampersController::class, 'destroy']);
+    Route::get('/hampers/search/{nama_hampers}', [HampersController::class, 'search']);
+    Route::post('/hampers/addproduk/{hampersId}', [HampersController::class, 'addProduct']);
+    Route::delete('/hampers/{hampersId}/{produkId}', [HampersController::class, 'removeProduct']);
 
     // Poin
     Route::get('/poins', [PoinController::class, 'index']);
