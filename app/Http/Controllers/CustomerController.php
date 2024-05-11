@@ -42,7 +42,7 @@ class CustomerController extends Controller
             ], 404);
         }
 
-        $str = Str::random(100);
+        $str = Str::random(20);
         PasswordReset::create([
             'email' => $request->email,
             'token' => $str,
@@ -53,7 +53,8 @@ class CustomerController extends Controller
             'username' => $customer->nama_customer,
             'website' => 'Atma Kitchen',
             'datetime' => date('Y-m-d H:i:s'),
-            'url' => request()->getHttpHost() . '/api/customers/verify/' . $str
+            // 'url' => request()->getHttpHost() . '/customers/verify/' . $str
+            'url' =>  'localhost:5173/customers/verify/' . $str
         ];
 
         Mail::to($request->email)->send(new Email($details));
@@ -89,9 +90,7 @@ class CustomerController extends Controller
             'password_customer' => Hash::make($request->password)
         ]);
 
-        $passwordReset->update([
-            'is_used' => true
-        ]);
+        $passwordReset->delete();
 
         return response()->json([
             'message' => 'Password updated'
