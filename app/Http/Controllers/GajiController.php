@@ -63,7 +63,11 @@ class GajiController extends Controller
             'id_karyawan' => $request->id_karyawan
         ]);
 
-        return (new GajiResource($gaji))->setMessage('Gaji updated successfully');
+        // return (new GajiResource($gaji))->setMessage('Gaji updated successfully');
+        return response()->json([
+            'message' => 'Gaji updated successfully',
+            'data' => $gaji
+        ]);
     }
 
 

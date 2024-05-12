@@ -129,6 +129,7 @@ Route::middleware(['auth:sanctum', 'abilities:MO'])->group(function () {
 
 Route::middleware(['auth:sanctum', 'abilities:OWNER'])->group(function () {
     // gaji
+    Route::get('/karyawan_search', [KaryawanController::class, 'index']);
     Route::get('/gaji', [GajiController::class, 'index']);
     Route::post('/gaji', [GajiController::class, 'store']);
     Route::put('/gaji/{id}', [GajiController::class, 'update']);

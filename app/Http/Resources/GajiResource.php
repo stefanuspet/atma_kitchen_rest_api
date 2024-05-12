@@ -23,10 +23,10 @@ class GajiResource extends JsonResource
     {
         $response = [
             'id_gaji' => $this->id,
-            'gaji_pokok' => $this->gaji_pokok,
-            'tunjangan' => $this->tunjangan,
-            'potongan' => $this->potongan,
+            'honor_harian' => $this->honor_harian,
+            'bonus' => $this->bonus,
             'total_gaji' => $this->total_gaji,
+            'tanggal_gaji' => $this->tanggal_gaji,
             'id_karyawan' => $this->id_karyawan,
         ];
 
