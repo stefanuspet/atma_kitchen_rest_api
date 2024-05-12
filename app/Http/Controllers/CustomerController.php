@@ -10,7 +10,7 @@ use App\Models\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use Mockery\Generator\StringManipulation\Pass\Pass;
+use Illuminate\Validation\ValidationException;
 
 class CustomerController extends Controller
 {
@@ -25,6 +25,36 @@ class CustomerController extends Controller
         return response()->json([
             "customer" => $customer
         ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        try {
+            $customer = Customer::findOrFail($id);
+
+            $request->validate([
+                "nama_customer" => "required",
+                "email_customer" => "required",
+                "notelp_customer" => "required",
+            ]);
+
+            $customer->nama_customer = $request->nama_customer;
+            $customer->email_customer = $request->email_customer;
+            $customer->notelp_customer = $request->notelp_customer;
+
+            $customer->save();
+
+            // return (new ProdukResource($customer))->setMessage('Customer updated successfully');
+
+            return response()->json([
+                'customer' => $customer,
+            ], 201);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'message' => "Validation errors were encountered in the input.",
+                'errors' => $e->validator->errors(),
+            ], 422);
+        }
     }
 
     // forget password

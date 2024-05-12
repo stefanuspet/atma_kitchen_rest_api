@@ -17,7 +17,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Authentication
-Route::post('/customers', [AuthController::class, 'registerCustomer']);
+Route::post('/register', [AuthController::class, 'registerCustomer']);
 Route::post('/customers/login', [AuthController::class, 'loginCustomer']);
 Route::post('/users/login', [AuthController::class, 'loginUser']);
 // login all
@@ -36,6 +36,7 @@ Route::get('/produk_penitip', [ProdukPenitipController::class, 'index']);
 // ===============[ authenticated user ] ===============
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/customers/profile', [CustomerController::class, 'getProfile']);
+    Route::post('/customers/profile/{id}', [CustomerController::class, 'update']);
     Route::get('/users/profile', [UserController::class, 'getProfile']);
     Route::get('/logout', [AuthController::class, 'logout']);
 });
