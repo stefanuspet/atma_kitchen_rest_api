@@ -23,22 +23,21 @@ class GajiController extends Controller
     }
 
     //store
-    public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'honor_harian' => 'required',
-            'bonus' => 'required',
-            'total_gaji' => 'required',
-            'tanggal_gaji' => 'required',
-            'id_karyawan' => 'required'
-        ]);
+    // public function store(Request $request)
+    // {
+    //     $validatedData = $request->validate([
+    //         'honor_harian' => 'required',
+    //         'bonus' => 'required',
+    //         'id_user' => 'required',
+    //         'id_karyawan' => 'required',
+    //     ]);
 
-        $validatedData['id_user'] = Auth::user()->id;
+    //     $validatedData['id_user'] = Auth::user()->id;
 
-        $gaji = Gaji::create($validatedData);
+    //     $gaji = Gaji::create($validatedData);
 
-        return (new GajiResource($gaji))->setMessage('Gaji created successfully');
-    }
+    //     return (new GajiResource($gaji))->setMessage('Gaji created successfully');
+    // }
 
     //update
     public function update(Request $request, $id)
@@ -48,19 +47,19 @@ class GajiController extends Controller
         $request->validate([
             'honor_harian' => 'required',
             'bonus' => 'required',
-            'total_gaji' => 'required',
-            'tanggal_gaji' => 'required',
-            'id_karyawan' => 'required'
+            // 'total_gaji' => 'required',
+            // 'tanggal_gaji' => 'required',
+            // 'id_karyawan' => 'required'
         ]);
 
         // Perbarui data gaji dengan menyertakan id_user dan id_karyawan
         $gaji->update([
             'honor_harian' => $request->honor_harian,
             'bonus' => $request->bonus,
-            'total_gaji' => $request->total_gaji,
-            'tanggal_gaji' => $request->tanggal_gaji,
-            'id_user' => Auth::user()->id,
-            'id_karyawan' => $request->id_karyawan
+            // 'total_gaji' => $request->total_gaji,
+            // 'tanggal_gaji' => $request->tanggal_gaji,
+            // 'id_user' => Auth::user()->id,
+            // 'id_karyawan' => $request->id_karyawan
         ]);
 
         // return (new GajiResource($gaji))->setMessage('Gaji updated successfully');

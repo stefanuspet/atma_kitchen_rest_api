@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\KaryawanResource;
+use App\Http\Resources\KaryawanGajiResource;
 use App\Models\Karyawan;
+use App\Models\Gaji;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class KaryawanController extends Controller
@@ -12,7 +14,7 @@ class KaryawanController extends Controller
     // this controller for api
     public function index()
     {
-        return KaryawanResource::collection(Karyawan::all());
+        return KaryawanGajiResource::collection(Karyawan::all());
     }
 
     public function store(Request $request)
@@ -23,9 +25,18 @@ class KaryawanController extends Controller
             'notelp_karyawan' => 'required|min:10|max:13'
         ]);
 
+        
         $Karyawan = Karyawan::create($validatedData);
-
-        return (new KaryawanResource($Karyawan))->setMessage('Karyawan created successfully');
+        
+        $dataGaji = [
+            'bonus' => 0,
+            'honor_harian' => 0,
+            'id_karyawan' => $Karyawan->id,
+            'id_user' => Auth::user()->id
+        ];
+    
+        $Karyawan = Gaji::create($dataGaji);
+        return (new KaryawanGajiResource($Karyawan))->setMessage('Karyawan created successfully');
     }
 
     public function update(Request $request, $id)
@@ -43,9 +54,7 @@ class KaryawanController extends Controller
         $Karyawan->notelp_karyawan = $request->notelp_karyawan;
         $Karyawan->save();
 
-        // $Karyawan = Karyawan::update($validatedData);
-
-        return (new KaryawanResource($Karyawan))->setMessage('Karyawan updated successfully');
+        return (new KaryawanGajiResource($Karyawan))->setMessage('Karyawan updated successfully');
     }
 
     public function search()
@@ -59,8 +68,7 @@ class KaryawanController extends Controller
     public function show($id)
     {
         $Karyawan = Karyawan::findOrFail($id);
-
-        return (new KaryawanResource($Karyawan))->setMessage('Karyawan shown successfully');
+        return (new KaryawanGajiResource($Karyawan))->setMessage('Karyawan shown successfully');
     }
 
     public function destroy($id)

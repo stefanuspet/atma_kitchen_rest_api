@@ -15,14 +15,12 @@ return new class extends Migration
             $table->id();
             $table->integer("honor_harian")->nullable(false);
             $table->integer("bonus")->nullable(true);
-            $table->integer("total_gaji")->nullable(false);
-            $table->date("tanggal_gaji")->nullable(false);
             $table->unsignedBigInteger("id_user")->nullable(false);
             $table->unsignedBigInteger("id_karyawan")->nullable(false);
             $table->timestamps();
 
             $table->foreign("id_user")->on("users")->references("id");
-            $table->foreign("id_karyawan")->on("karyawans")->references("id");
+            $table->foreign("id_karyawan")->on("karyawans")->references("id")->constrained()->onDelete('cascade');
         });
     }
 

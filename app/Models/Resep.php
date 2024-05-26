@@ -27,6 +27,6 @@ class Resep extends Model
 
     public function bahan_baku(): BelongsToMany
     {
-        return $this->belongsTo(Bahan_baku::class, 'bahan_baku_resep', 'id_resep', 'id_bahan_baku');
+        return $this->belongsToMany(Bahan_baku::class, 'bahan_baku_resep', 'id_resep', 'id_bahan_baku');
     }
 }

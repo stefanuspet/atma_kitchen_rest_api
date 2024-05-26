@@ -16,8 +16,6 @@ class Gaji extends Model
     protected $fillable = [
         "honor_harian",
         "bonus",
-        "total_gaji",
-        "tanggal_gaji",
         "id_user",
         "id_karyawan"
     ];

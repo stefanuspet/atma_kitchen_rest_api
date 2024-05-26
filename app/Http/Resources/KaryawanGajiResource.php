@@ -5,27 +5,29 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class GajiResource extends JsonResource
+class KaryawanGajiResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
      * @return array<string, mixed>
      */
-    protected $message = '';
 
-    public function setMessage($message)
+    protected $message = "";
+
+    public function setMessage(string $message): self
     {
         $this->message = $message;
         return $this;
     }
+
     public function toArray(Request $request): array
     {
         $response = [
-            'id_gaji' => $this->id,
-            'honor_harian' => $this->honor_harian,
-            'bonus' => $this->bonus,
-            'nama_karyawan' => $this->karyawan->nama_karyawan,
+            'id_karyawan' => $this->id,
+            'nama_karyawan' => $this->nama_karyawan,
+            "email_karyawan" => $this->email_karyawan,
+            "notelp_karyawan" => $this->notelp_karyawan,
         ];
 
         if ($this->message) {

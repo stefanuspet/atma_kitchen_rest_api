@@ -14,6 +14,7 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProdukPenitipController;
 use App\Http\Controllers\ResepController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\JarakPengirimanController;
 use Illuminate\Support\Facades\Route;
 
 // Authentication
@@ -37,6 +38,7 @@ Route::get('/produk_penitip', [ProdukPenitipController::class, 'index']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/customers/profile', [CustomerController::class, 'getProfile']);
     Route::post('/customers/profile/{id}', [CustomerController::class, 'update']);
+    Route::get('/users/profile', [UserController::class, 'getProfile']);
     Route::get('/users/profile', [UserController::class, 'getProfile']);
     Route::get('/logout', [AuthController::class, 'logout']);
 });
@@ -92,6 +94,12 @@ Route::middleware(['auth:sanctum', 'abilities:ADMIN'])->group(function () {
     Route::get('/resep/{id}', [ResepController::class, 'show']);
     Route::delete('/resep/{id}', [ResepController::class, 'destroy']);
     Route::get('/resep/search/{nama_produk}', [ProdukPenitipController::class, "search"]);
+
+    Route::get('/jarak_pengiriman', [JarakPengirimanController::class, 'index']);
+    Route::post('/jarak_pengiriman', [JarakPengirimanController::class, 'store']);
+    Route::put('/jarak_pengiriman/{id}', [JarakPengirimanController::class, 'update']);
+    Route::get('/jarak_pengiriman/{id}', [JarakPengirimanController::class, 'show']);
+    Route::delete('/jarak_pengiriman/{id}', [JarakPengirimanController::class, 'destroy']);
 });
 
 // ===============[  role : Manager ] ===============
@@ -132,7 +140,7 @@ Route::middleware(['auth:sanctum', 'abilities:OWNER'])->group(function () {
     // gaji
     Route::get('/karyawan_search', [KaryawanController::class, 'index']);
     Route::get('/gaji', [GajiController::class, 'index']);
-    Route::post('/gaji', [GajiController::class, 'store']);
+    // Route::post('/gaji', [GajiController::class, 'store']);
     Route::put('/gaji/{id}', [GajiController::class, 'update']);
     Route::get('/gaji/{id}', [GajiController::class, 'show']);
     Route::delete('/gaji/{id}', [GajiController::class, 'destroy']);
