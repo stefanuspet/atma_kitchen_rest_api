@@ -9,6 +9,7 @@ use App\Http\Controllers\HampersController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\PembelianBahanBakuController;
+use App\Http\Controllers\PengeluaranLainController;
 use App\Http\Controllers\PenitipController;
 use App\Http\Controllers\PoinController;
 use App\Http\Controllers\PresensiController;
@@ -136,6 +137,13 @@ Route::middleware(['auth:sanctum', 'abilities:MO'])->group(function () {
     Route::get('/karyawan/{id}', [KaryawanController::class, 'show']);
     Route::delete('/karyawan/{id}', [KaryawanController::class, 'destroy']);
     Route::get('/karyawan/search/{nama_karyawan}', [KaryawanController::class, 'search']);
+
+    Route::get('/pengeluaranlain', [PengeluaranLainController::class, 'index']);
+    Route::post('/pengeluaranlain', [PengeluaranLainController::class, 'store']);
+    Route::put('/pengeluaranlain/{id}', [PengeluaranLainController::class, 'update']);
+    Route::get('/pengeluaranlain/{id}', [PengeluaranLainController::class, 'show']);
+    Route::delete('/pengeluaranlain/{id}', [PengeluaranLainController::class, 'destroy']);
+    Route::get('/pengeuaranlain/search/{pengeluaran_lain}', [PengeluaranLainController::class, 'search']);
 
     // penitip
     Route::get('/penitip', [PenitipController::class, 'index']);
