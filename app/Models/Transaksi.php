@@ -25,6 +25,7 @@ class Transaksi extends Model
         "status_pengiriman",
         "jenis_pengiriman",
         "tip",
+        "jarak",
         "ongkir",
         "potongan_poin",
         "poin_pesanan",
@@ -36,17 +37,17 @@ class Transaksi extends Model
 
     public function produk_penitip(): BelongsToMany
     {
-        return $this->belongsToMany(Produk_penitip::class, 'detail_transaksi_produk_penitip', 'id_transaksi', 'id_produk_penitip');
+        return $this->belongsToMany(Produk_penitip::class, 'detail_transaksis', 'id_transaksi', 'id_produk_penitip');
     }
 
     public function produk(): BelongsToMany
     {
-        return $this->belongsToMany(Produk::class, 'detali_transaksi_produk', 'id_transaksi', 'id_produk');
+        return $this->belongsToMany(Produk::class, 'detali_transaksis', 'id_transaksi', 'id_produk');
     }
 
     public function hampers(): BelongsToMany
     {
-        return $this->belongsToMany(Hampers::class, 'detail_transaksi_hampers', 'id_transaksi', 'id_hampers');
+        return $this->belongsToMany(Hampers::class, 'detail_transaksis', 'id_transaksi', 'id_hampers');
     }
 
     public function customer(): BelongsTo

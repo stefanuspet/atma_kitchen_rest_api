@@ -33,7 +33,7 @@ class Produk extends Model
 
     public function transaksi(): BelongsToMany
     {
-        return $this->belongsToMany(Transaksi::class, 'detali_transaksi_produk', 'id_produk', 'id_transaksi');
+        return $this->belongsToMany(Transaksi::class, 'detali_transaksis', 'id_produk', 'id_transaksi');
     }
     public function hampers(): BelongsToMany
     {

@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jarak_pengirimans', function (Blueprint $table) {
-            $table->id();
-            $table->float('jarak')->nullable(false);;
-            $table->integer('harga')->nullable(false);;
-            $table->integer('waktu')->nullable(false);;
-            $table->timestamps();
-        });
+        // Schema::create('jarak_pengirimans', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->float('jarak')->nullable(false);
+        //     $table->integer('harga')->nullable(false);
+        //     $table->integer('waktu')->nullable(false);
+        //     $table->timestamps();
+        // });
     }
 
     /**

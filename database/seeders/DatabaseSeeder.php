@@ -24,11 +24,17 @@ class DatabaseSeeder extends Seeder
             JabatanSeeder::class,
             UserSeeder::class,
             KaryawanSeeder::class,
-            JarakPengirimanSeeder::class,
-            PesananSeeder::class,
+            // JarakPengirimanSeeder::class,
+            // PesananSeeder::class,
             ProdukSeeder::class,
             CustomerSeeder::class,
             PoinSeeder::class,
+            PenitipSeeder::class,
+            ProdukPenitipSeeder::class,
+            HampersSeeder::class,
+            ProdukHampersSeeder::class,
+            TransaksiSeeder::class,
+            DetailTransaksiSeeder::class,
         ]);
     }
 }

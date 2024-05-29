@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string("status_pengiriman")->nullable(true);
             $table->string("jenis_pengiriman")->nullable(false);
             $table->double("tip")->nullable(true);
+            $table->double("jarak")->nullable(true);
             $table->double("ongkir")->nullable(true);
             $table->double("potongan_poin")->nullable(false);
             $table->double("poin_pesanan")->nullable(true);
@@ -29,6 +30,7 @@ return new class extends Migration
 
 
             // $table->unsignedBigInteger("id_user")->nullable(false);
+            // $table->unsignedBigInteger("id_jarak")->nullable(true);
             $table->unsignedBigInteger("id_customer")->nullable(false);
             $table->unsignedBigInteger("id_packaging")->nullable(true);
             $table->timestamps();
@@ -36,6 +38,7 @@ return new class extends Migration
             // $table->foreign("id_user")->on("users")->references("id");
             $table->foreign("id_customer")->on("customers")->references("id");
             $table->foreign("id_packaging")->on("packagings")->references("id");
+            // $table->foreign("id_jarak")->on("jarak_pengirimans")->references("id");
         });
     }
 
