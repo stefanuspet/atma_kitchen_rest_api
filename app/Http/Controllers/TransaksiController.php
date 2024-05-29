@@ -64,4 +64,46 @@ class TransaksiController extends Controller
             'data' => $transaksi
         ]);
     }
+
+    public function updateJarak(Request $request, $id)
+    {
+        // validation
+        $request->validate([
+            'jarak' => 'required',
+        ]);
+
+        $transaksi = Transaksi::find($id);
+        $transaksi->jarak = $request->jarak;
+        // if jarak < 5 = 10000 , 5 - 10 = 15000, 10 - 15 = 20000, > 15 = 25000
+        if ($request->jarak < 5) {
+            $transaksi->ongkir = 10000;
+        } elseif ($request->jarak >= 5 && $request->jarak < 10) {
+            $transaksi->ongkir = 15000;
+        } elseif ($request->jarak >= 10 && $request->jarak < 15) {
+            $transaksi->ongkir = 20000;
+        } else {
+            $transaksi->ongkir = 25000;
+        }
+        $transaksi->harga_total += $transaksi->ongkir;
+        $transaksi->save();
+
+        return response()->json([
+            'message' => 'Transaksi updated successfully',
+            'data' => $transaksi
+        ]);
+    }
+
+    // get transaksi by id
+    public function show($id)
+    {
+        $transaksi = Transaksi::find($id);
+        if ($transaksi) {
+            return response()->json([
+                'data' => $transaksi
+            ]);
+        }
+        return response()->json([
+            'message' => 'Transaksi not found'
+        ], 404);
+    }
 }

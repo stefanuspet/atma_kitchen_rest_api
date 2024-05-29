@@ -126,6 +126,11 @@ Route::middleware(['auth:sanctum', 'abilities:ADMIN'])->group(function () {
     Route::post('/konfirmasi_pembayaran/{id}/konfirmasi', [KonfirmasiPembayaranController::class, 'konfirmasi']);
     Route::post('/konfirmasi_pembayaran/{id}/tip', [KonfirmasiPembayaranController::class, 'hitungTip']);
     Route::get('/konfirmasi_pembayaran/{id}', [KonfirmasiPembayaranController::class, 'show']);
+
+    // transaksi
+    Route::get('/transaksi', [TransaksiController::class, 'index']);
+    Route::put('/transaksi/{id}', [TransaksiController::class, 'updateJarak']);
+    Route::get('/transaksi/{id}', [TransaksiController::class, 'show']);
 });
 
 // ===============[  role : Manager ] ===============
