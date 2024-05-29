@@ -83,8 +83,8 @@ class User extends Authenticatable implements CanResetPassword
         return $this->belongsToMany(Poin::class, 'pengelolaan_poin', 'id_user', 'id_poin');
     }
 
-    public function bahan_baku(): BelongsToMany
-    {
-        return $this->belongsToMany(Bahan_baku::class, 'pembelian_bahan_baku', '', ' id_bahan_baku');
-    }
+    // public function bahan_baku(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(Bahan_baku::class, 'pembelian_bahan_baku', '', ' id_bahan_baku');
+    // }
 }

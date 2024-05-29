@@ -22,9 +22,11 @@ class ProdukController extends Controller
     {
         $request->validate([
             'nama_produk' => 'required|unique:produks',
-            'harga_produk' => 'required',
+            'harga_satu_loyang' => 'required',
+            'harga_setengah_loyang' => 'required',
             'stok_produk' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            "max_produksi" => "required",
         ]);
 
         $user_id = Auth::user()->id;
@@ -36,8 +38,10 @@ class ProdukController extends Controller
 
         $produk = new Produk();
         $produk->nama_produk = $request->nama_produk;
-        $produk->harga_produk = $request->harga_produk;
+        $produk->harga_satu_loyang = $request->harga_satu_loyang;
+        $produk->harga_setengah_loyang = $request->harga_setengah_loyang;
         $produk->stok_produk = $request->stok_produk;
+        $produk->max_produksi = $request->max_produksi;
         $produk->id_user = $user_id;
         $produk->image = $uploadedImageResponse;
         $produk->save();
@@ -52,16 +56,18 @@ class ProdukController extends Controller
 
         $request->validate([
             "nama_produk" => "required",
-            "harga_produk" => "required",
+            "harga_satu_loyang" => "required",
+            "harga_setengah_loyang" => "required",
             "stok_produk" => "required",
             "image" => "image|mimes:jpeg,png,jpg,gif|max:2048",
+            "max_produksi" => "required",
         ]);
 
         if ($request->hasFile('image')) {
             // delete old image
             $oldImagePath = 'public/produk/' . basename($produk->image);
             Storage::delete($oldImagePath);
-            
+
             $uploadFolder = "produk";
             $image = $request->file('image');
             $image_upload_path = $image->store($uploadFolder, 'public');
@@ -76,8 +82,11 @@ class ProdukController extends Controller
         }
 
         $produk->nama_produk = $request->nama_produk;
-        $produk->harga_produk = $request->harga_produk;
+        $produk->harga_satu_loyang = $request->harga_satu_loyang;
+        $produk->harga_satu_loyang = $request->harga_satu_loyang;
+        $produk->harga_setengah_loyang = $request->harga_setengah_loyang;
         $produk->stok_produk = $request->stok_produk;
+        $produk->max_produksi = $request->max_produksi;
         $produk->id_user = $user_id;
 
         $produk->save();

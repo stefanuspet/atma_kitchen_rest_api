@@ -2,17 +2,20 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BahanBakuController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\GajiController;
 use App\Http\Controllers\HampersController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\PembelianBahanBakuController;
 use App\Http\Controllers\PenitipController;
 use App\Http\Controllers\PoinController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProdukPenitipController;
 use App\Http\Controllers\ResepController;
+use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\JarakPengirimanController;
 use App\Http\Controllers\KonfirmasiPembayaranController;
@@ -31,10 +34,10 @@ Route::post('/users/forgetpassword', [UserController::class, 'forgetPassword']);
 Route::post('/customers/requestforget', [CustomerController::class, 'forgetPassword']);
 // verify token
 Route::post('/customers/verify/{token}', [CustomerController::class, 'verify']);
-
 // ===============[ all User can access ] ===============
 Route::get('/produk', [ProdukController::class, 'index']);
 Route::get('/produk_penitip', [ProdukPenitipController::class, 'index']);
+Route::get('/hampers', [HampersController::class, 'index']);
 
 
 // ===============[ authenticated user ] ===============
@@ -44,6 +47,19 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/users/profile', [UserController::class, 'getProfile']);
     Route::get('/users/profile', [UserController::class, 'getProfile']);
     Route::get('/logout', [AuthController::class, 'logout']);
+});
+
+
+Route::middleware(['auth:sanctum', 'abilities:Customer'])->group(function () {
+    Route::get('/produk_user/{id}', [ProdukController::class, 'show']);
+
+    Route::get('/cart', [CartController::class, 'index']);
+    Route::post('/cart', [CartController::class, 'store']);
+    Route::put("/cart/{id}", [CartController::class, 'update']);
+    Route::delete('/cart/{id}', [CartController::class, 'destroy']);
+    Route::get('/cart/{id}', [CartController::class, 'show']);
+
+    Route::post('/checkout', [TransaksiController::class, 'checkout']);
 });
 
 // ===============[ role : Admin ] ===============
@@ -72,7 +88,6 @@ Route::middleware(['auth:sanctum', 'abilities:ADMIN'])->group(function () {
     Route::get('/produk_penitip/search/{nama_produk_penitip}', [ProdukPenitipController::class, "search"]);
 
     // hampers
-    Route::get('/hampers', [HampersController::class, 'index']);
     Route::post('/hampers', [HampersController::class, 'store']);
     Route::put('/hampers/{id}', [HampersController::class, 'update']);
     Route::get('/hampers/{id}', [HampersController::class, 'show']);
@@ -142,6 +157,16 @@ Route::middleware(['auth:sanctum', 'abilities:MO'])->group(function () {
     Route::put('/jabatan/{id}', [JabatanController::class, 'update']);
     Route::get('/jabatan/{id}', [JabatanController::class, 'show']);
     Route::delete('/jabatan/{id}', [JabatanController::class, 'destroy']);
+
+    //pembelian bahan baku
+    Route::get('/pembelian_bahan_baku/bahanbaku', [BahanBakuController::class, 'index']);
+    Route::get('/pembelian_bahan_baku/bahanbaku/{id}', [BahanBakuController::class, 'show']);
+    Route::get('/pembelian_bahan_baku/{id}', [PembelianBahanBakuController::class, 'show']);
+    Route::get('/pembelian_bahan_baku', [PembelianBahanBakuController::class, 'index']);
+    Route::post('/pembelian_bahan_baku', [PembelianBahanBakuController::class, 'store']);
+    Route::put('/pembelian_bahan_baku/{id}', [PembelianBahanBakuController::class, 'update']);
+    Route::delete('/pembelian_bahan_baku/{id}', [PembelianBahanBakuController::class, 'destroy']);
+    Route::post('/pembelian_bahan_baku/search', [PembelianBahanBakuController::class, 'getNamaBahanBaku']);
 });
 
 // ===============[  role : Owner ] ===============

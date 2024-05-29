@@ -26,6 +26,9 @@ class DatabaseSeeder extends Seeder
             KaryawanSeeder::class,
             JarakPengirimanSeeder::class,
             PesananSeeder::class,
+            ProdukSeeder::class,
+            CustomerSeeder::class,
+            PoinSeeder::class,
         ]);
     }
 }

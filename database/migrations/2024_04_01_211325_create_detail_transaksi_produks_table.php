@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('detail_transaksi_produks', function (Blueprint $table) {
-            $table->string("id_transaksi")->nullable(false);
+            $table->unsignedBigInteger("id_transaksi")->nullable(false);
             $table->unsignedBigInteger("id_produk")->nullable(false);
             $table->timestamps();
 
