@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
             JabatanSeeder::class,
             UserSeeder::class,
             KaryawanSeeder::class,
+            ProdukSeeder::class,
+            CustomerSeeder::class,
+            PoinSeeder::class,
         ]);
     }
 }

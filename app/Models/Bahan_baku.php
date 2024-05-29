@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Bahan_baku extends Model
@@ -34,5 +35,9 @@ class Bahan_baku extends Model
     public function resep(): BelongsToMany
     {
         return $this->belongsToMany(Resep::class, 'bahan_baku_resep', 'id_bahan_baku', 'id_resep');
+    }
+    public function pembelian_bahan_baku(): BelongsToMany
+    {
+        return $this->belongsToMany(Pembelian_bahan_baku::class, "id_bahan_baku");
     }
 }

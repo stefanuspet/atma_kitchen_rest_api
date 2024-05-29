@@ -18,9 +18,11 @@ class Produk extends Model
 
     protected $fillable = [
         "nama_produk",
-        "harga_produk",
+        "harga_satu_loyang",
+        "harga_setengah_loyang",
         "stok_produk",
         "image",
+        "max_produksi",
         "id_user",
     ];
 
@@ -51,5 +53,10 @@ class Produk extends Model
     public function resep(): BelongsTo
     {
         return $this->belongsTo(Resep::class, "id_resep", "id");
+    }
+
+    public function cart(): HasMany
+    {
+        return $this->hasMany(Cart::class, "id_produk", "id");
     }
 }

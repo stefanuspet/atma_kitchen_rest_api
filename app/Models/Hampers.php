@@ -42,4 +42,9 @@ class Hampers extends Model
     {
         return $this->belongsTo(Hampers::class, "id_user", "id");
     }
+
+    public function cart(): HasMany
+    {
+        return $this->hasMany(Cart::class, "id_hampers", "id");
+    }
 }
