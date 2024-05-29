@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\KonfirmasiPembayaran;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,6 +24,8 @@ class DatabaseSeeder extends Seeder
             JabatanSeeder::class,
             UserSeeder::class,
             KaryawanSeeder::class,
+            JarakPengirimanSeeder::class,
+            PesananSeeder::class,
         ]);
     }
 }

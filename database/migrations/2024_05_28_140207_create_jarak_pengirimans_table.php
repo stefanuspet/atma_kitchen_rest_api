@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('jarak_pengirimans', function (Blueprint $table) {
             $table->id();
-            $table->float('jarak');
-            $table->integer('harga');
-            $table->integer('waktu');
+            $table->float('jarak')->nullable(false);;
+            $table->integer('harga')->nullable(false);;
+            $table->integer('waktu')->nullable(false);;
             $table->timestamps();
         });
     }

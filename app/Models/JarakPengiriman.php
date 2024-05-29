@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 
 class JarakPengiriman extends Model
 {
@@ -15,6 +17,11 @@ class JarakPengiriman extends Model
     protected $fillable = [
         "jarak",
         "harga",
-        "waktu"
+        "waktu",
     ];
+
+    public function pesanan(): HasMany
+    {
+        return $this->hasMany(Pesanan::class, "id_jarak_pengiriman", "id");
+    }
 }

@@ -15,6 +15,8 @@ use App\Http\Controllers\ProdukPenitipController;
 use App\Http\Controllers\ResepController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\JarakPengirimanController;
+use App\Http\Controllers\KonfirmasiPembayaranController;
+use App\Http\Controllers\PesananController;
 use Illuminate\Support\Facades\Route;
 
 // Authentication
@@ -33,6 +35,7 @@ Route::post('/customers/verify/{token}', [CustomerController::class, 'verify']);
 // ===============[ all User can access ] ===============
 Route::get('/produk', [ProdukController::class, 'index']);
 Route::get('/produk_penitip', [ProdukPenitipController::class, 'index']);
+
 
 // ===============[ authenticated user ] ===============
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -95,11 +98,18 @@ Route::middleware(['auth:sanctum', 'abilities:ADMIN'])->group(function () {
     Route::delete('/resep/{id}', [ResepController::class, 'destroy']);
     Route::get('/resep/search/{nama_produk}', [ProdukPenitipController::class, "search"]);
 
+    // jarak pengiriman
     Route::get('/jarak_pengiriman', [JarakPengirimanController::class, 'index']);
     Route::post('/jarak_pengiriman', [JarakPengirimanController::class, 'store']);
     Route::put('/jarak_pengiriman/{id}', [JarakPengirimanController::class, 'update']);
     Route::get('/jarak_pengiriman/{id}', [JarakPengirimanController::class, 'show']);
     Route::delete('/jarak_pengiriman/{id}', [JarakPengirimanController::class, 'destroy']);
+
+    // konfirmasi pembayaran
+    Route::get('/konfirmasi_pembayaran', [KonfirmasiPembayaranController::class, 'index']);
+    Route::post('/konfirmasi_pembayaran/{id}/konfirmasi', [KonfirmasiPembayaranController::class, 'konfirmasi']);
+    Route::post('/konfirmasi_pembayaran/{id}/tip', [KonfirmasiPembayaranController::class, 'hitungTip']);
+    Route::get('/konfirmasi_pembayaran/{id}', [KonfirmasiPembayaranController::class, 'show']);
 });
 
 // ===============[  role : Manager ] ===============
