@@ -17,7 +17,7 @@ return new class extends Migration
             $table->double("harga_satu_loyang")->nullable(false);
             $table->double("harga_setengah_loyang")->nullable(false);
             $table->integer("stok_produk")->nullable(false);
-            $table->integer("max_produksi")->nullable(false);
+            $table->double("max_produksi")->nullable(false);
             $table->string("image")->nullable(false);
             $table->unsignedBigInteger("id_user")->nullable(false);
             $table->timestamps();

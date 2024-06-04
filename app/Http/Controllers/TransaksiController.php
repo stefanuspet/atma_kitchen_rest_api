@@ -26,7 +26,7 @@ class TransaksiController extends Controller
             'metode_pembayaran' => 'required',
             'jenis_pengiriman' => 'required',
             'potongan_poin' => 'required|numeric|min:0',
-            'harga_pengurangan_poin' => 'required|numeric',
+            'harga_total' => 'required|numeric|min:0',
         ]);
 
 
@@ -51,16 +51,36 @@ class TransaksiController extends Controller
 
         $transaksi->potongan_poin = $request->potongan_poin;
 
-        $transaksi->harga_pengurangan_poin = $request->harga_pengurangan_poin;
-        $harga =  $request->harga_pengurangan_poin - ($request->potongan_poin * 100);
+        $transaksi->harga_setelah_poin = ($request->potongan_poin * 100);
+        $harga =  $transaksi->harga_setelah_poin;
 
         $transaksi->id_customer = $customerid;
         $transaksi->id_packaging = $request->id_packaging;
-        $transaksi->harga_total = $harga;
+        $transaksi->harga_total = $request->harga_total - $harga;
         $transaksi->save();
+
+        // get id transaksi last insert
+        $transaksi = Transaksi::latest()->first();
 
         return response()->json([
             'message' => 'Transaksi created successfully',
+            'data' => $transaksi
+        ]);
+    }
+
+    // add produk/hampers/penitip to transaksi
+    public function addProdukToDetail(Request $request, $id)
+    {
+        // validation
+        $request->validate([
+            'id_produk' => 'required',
+        ]);
+
+        $transaksi = Transaksi::find($id);
+        $transaksi->produk()->attach($request->id_produk);
+
+        return response()->json([
+            'message' => 'Produk added to transaksi successfully',
             'data' => $transaksi
         ]);
     }

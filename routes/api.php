@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BahanBakuController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DetailTransaksiController;
 use App\Http\Controllers\GajiController;
 use App\Http\Controllers\HampersController;
 use App\Http\Controllers\JabatanController;
@@ -20,7 +21,10 @@ use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\JarakPengirimanController;
 use App\Http\Controllers\KonfirmasiPembayaranController;
+use App\Http\Controllers\KoutaProduksiController;
 use App\Http\Controllers\PesananController;
+use App\Models\Bahan_baku;
+use App\Models\Poin;
 use Illuminate\Support\Facades\Route;
 
 // Authentication
@@ -59,8 +63,30 @@ Route::middleware(['auth:sanctum', 'abilities:Customer'])->group(function () {
     Route::put("/cart/{id}", [CartController::class, 'update']);
     Route::delete('/cart/{id}', [CartController::class, 'destroy']);
     Route::get('/cart/{id}', [CartController::class, 'show']);
+    Route::delete('/cart_produk/{id}', [CartController::class, 'destroyByProduk']);
 
     Route::post('/checkout', [TransaksiController::class, 'checkout']);
+    Route::get('/transaksi_user', [TransaksiController::class, 'index']);
+    // addproduktodetail
+    Route::post('/addProdukToDetail/{id}', [TransaksiController::class, 'addProdukToDetail']);
+
+    Route::get('/poin', [PoinController::class, 'index']);
+    Route::put('/poin_user', [PoinController::class, 'update']);
+
+    Route::get('/detail_transaksi', [DetailTransaksiController::class, 'getByIdTransaksi']);
+    Route::get('/detail_transaksi_all', [DetailTransaksiController::class, 'getAllTransaksi']);
+
+
+
+
+    // kuota produksi
+    Route::get('/kuota_produksi', [KoutaProduksiController::class, 'index']);
+    Route::get('/kuota_produksi/{id}', [KoutaProduksiController::class, 'show']);
+    Route::post('/kuota_produksi/produk/{id}', [KoutaProduksiController::class, 'showByProduk']);
+    Route::post('/kuota_produksi', [KoutaProduksiController::class, 'store']);
+    Route::put('/kuota_produksi/{id}', [KoutaProduksiController::class, 'update']);
+    Route::delete('/kuota_produksi/{id}', [KoutaProduksiController::class, 'destroy']);
+    Route::get('/kuota_produksi/tanggal/{tanggal}', [KoutaProduksiController::class, 'showByTanggal']);
 });
 
 // ===============[ role : Admin ] ===============
@@ -180,6 +206,8 @@ Route::middleware(['auth:sanctum', 'abilities:MO'])->group(function () {
     Route::put('/pembelian_bahan_baku/{id}', [PembelianBahanBakuController::class, 'update']);
     Route::delete('/pembelian_bahan_baku/{id}', [PembelianBahanBakuController::class, 'destroy']);
     Route::post('/pembelian_bahan_baku/search', [PembelianBahanBakuController::class, 'getNamaBahanBaku']);
+
+    route::get('/cetak_laporan_bb_mo', [BahanBakuController::class, 'laporanstok']);
 });
 
 // ===============[  role : Owner ] ===============
@@ -192,4 +220,6 @@ Route::middleware(['auth:sanctum', 'abilities:OWNER'])->group(function () {
     Route::put('/gaji/{id}', [GajiController::class, 'update']);
     Route::get('/gaji/{id}', [GajiController::class, 'show']);
     Route::delete('/gaji/{id}', [GajiController::class, 'destroy']);
+
+    route::get('/cetak_laporan_bb_o', [BahanBakuController::class, 'laporanstok']);
 });

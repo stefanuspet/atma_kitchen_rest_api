@@ -16,7 +16,6 @@ class Transaksi extends Model
     public $incrementing = false;
 
     protected $fillable = [
-        "id",
         "tanggal_transaksi",
         "tanggal_ambil",
         "tanggal_lunas",
@@ -29,7 +28,8 @@ class Transaksi extends Model
         "ongkir",
         "potongan_poin",
         "poin_pesanan",
-        "harga_pengurangan_poin",
+        "harga_setelah_poin",
+        "harga_setelah_ongkir",
         "harga_total",
         "id_customer",
         "id_packaging",
@@ -42,7 +42,7 @@ class Transaksi extends Model
 
     public function produk(): BelongsToMany
     {
-        return $this->belongsToMany(Produk::class, 'detali_transaksis', 'id_transaksi', 'id_produk');
+        return $this->belongsToMany(Produk::class, 'detail_transaksis', 'id_transaksi', 'id_produk');
     }
 
     public function hampers(): BelongsToMany

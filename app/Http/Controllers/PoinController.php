@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Poin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PoinController extends Controller
 {
@@ -38,16 +39,16 @@ class PoinController extends Controller
 
 
     // update
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $poin = Poin::findOrFail($id);
+        //search poin by id user
+        $poin = Poin::where('id_customer', Auth::user()->id)->first();
+
         $request->validate([
             'jumlah_poin' => 'required',
-            'id_customer' => 'required'
         ]);
 
         $poin->jumlah_poin = $request->jumlah_poin;
-        $poin->id_customer = $request->id_customer;
         $poin->save();
 
         return response()->json([
@@ -73,6 +74,16 @@ class PoinController extends Controller
 
         return response()->json([
             "message" => "Poin berhasil dihapus"
+        ]);
+    }
+
+    // get poin by customer id
+    public function getPoinByCustomerId()
+    {
+        $customer_id = Auth::user()->id;
+        $poin = Poin::where('id_customer', $customer_id)->first();
+        return response()->json([
+            'poin' => $poin
         ]);
     }
 }

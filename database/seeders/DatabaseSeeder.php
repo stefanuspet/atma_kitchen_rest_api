@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
             ProdukHampersSeeder::class,
             TransaksiSeeder::class,
             DetailTransaksiSeeder::class,
+            BahanBakuSeeder::class,
         ]);
     }
 }

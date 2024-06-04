@@ -22,7 +22,6 @@ class Produk extends Model
         "harga_setengah_loyang",
         "stok_produk",
         "image",
-        "max_produksi",
         "id_user",
     ];
 
@@ -33,7 +32,7 @@ class Produk extends Model
 
     public function transaksi(): BelongsToMany
     {
-        return $this->belongsToMany(Transaksi::class, 'detali_transaksis', 'id_produk', 'id_transaksi');
+        return $this->belongsToMany(Transaksi::class, 'detail_transaksis', 'id_produk', 'id_transaksi');
     }
     public function hampers(): BelongsToMany
     {
@@ -58,5 +57,10 @@ class Produk extends Model
     public function cart(): HasMany
     {
         return $this->hasMany(Cart::class, "id_produk", "id");
+    }
+
+    public function kuota_produksi(): HasMany
+    {
+        return $this->hasMany(KuotaProduksi::class, "id_produk", "id");
     }
 }

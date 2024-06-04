@@ -87,4 +87,12 @@ class BahanBakuController extends Controller
             'data' => $bahan_baku
         ], 200);
     }
+
+    public function laporanstok()
+    {
+        $bahan_baku = Bahan_baku::all();
+        return response()->json([
+            'data' => $bahan_baku
+        ], 200);
+    }
 }

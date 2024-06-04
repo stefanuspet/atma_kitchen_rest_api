@@ -20,8 +20,6 @@ class Bahan_baku extends Model
         'satuan_bahan',
         'harga_satuan',
         "id_user",
-        "id_produk",
-        "id_resep"
     ];
 
     public function user(): BelongsToMany

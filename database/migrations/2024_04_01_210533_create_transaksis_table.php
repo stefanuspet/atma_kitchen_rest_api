@@ -25,7 +25,8 @@ return new class extends Migration
             $table->double("ongkir")->nullable(true);
             $table->double("potongan_poin")->nullable(false);
             $table->double("poin_pesanan")->nullable(true);
-            $table->double('harga_pengurangan_poin')->nullable(false);
+            $table->double('harga_setelah_poin')->nullable(false);
+            $table->double("harga_setelah_ongkir")->nullable(true);
             $table->double("harga_total")->nullable(false);
 
 
