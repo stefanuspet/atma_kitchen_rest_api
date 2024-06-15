@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Detail_transaksi;
+use App\Models\Hampers;
 use App\Models\Poin;
+use App\Models\Produk;
+use App\Models\Produk_penitip;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class TransaksiController extends Controller
 {
@@ -125,5 +130,122 @@ class TransaksiController extends Controller
         return response()->json([
             'message' => 'Transaksi not found'
         ], 404);
+    }
+
+    public function LaporanPenjualanBulanan(Request $request)
+    {
+        // get transaksi where status_pesanan = Selesai and tanggal_ambil =  Request bulan&tahun
+        $transaksis = Transaksi::where('status_pesanan', 'Selesai')
+            ->whereMonth('tanggal_ambil', $request->bulan)
+            ->whereYear('tanggal_ambil', $request->tahun)
+            ->get();
+
+        // get detail transaksi sesuai dengan $transaksi->id
+        // foreach $transaksi->id
+        foreach ($transaksis as $transaksi) {
+            $detail_transaksi = Detail_transaksi::where('id_transaksi', $transaksi->id)->get();
+            $transaksi->detail_transaksi = $detail_transaksi;
+        }
+
+        // add produk by id_produk from detail transaksi
+        foreach ($transaksis as $transaksi) {
+            foreach ($transaksi->detail_transaksi as $detail) {
+                $produk = Produk::find($detail->id_produk);
+                $detail->produk = $produk;
+            }
+        }
+
+        $produkList = [];
+
+        // get total kuantitas produk by id_produk
+        foreach ($transaksis as $transaksi) {
+            foreach ($transaksi->detail_transaksi as $detail) {
+                $produk = Produk::find($detail->id_produk);
+                // Check if the product already exists in the list
+                if (isset($produkList[$produk->nama_produk])) {
+                    $produkList[$produk->nama_produk]['jumlah_produk'] += $detail->jumlah_produk;
+                    $produkList[$produk->nama_produk]['jumlah_uang'] += $detail->jumlah_produk * $produk->harga;
+                } else {
+
+                    $produkList[$produk->nama_produk] = [
+                        'nama_produk' => $produk->nama_produk,
+                        'jumlah_produk' => $detail->jumlah_produk,
+                        'harga_produk' => $produk->harga,
+                        "jumlah_uang" => $detail->jumlah_produk * $produk->harga
+                    ];
+                }
+            }
+        }
+
+        // Convert associative array to indexed array
+        $produkall = array_values($produkList);
+
+        return response()->json([
+            'data' => $produkall
+        ]);
+    }
+
+    // menampilkan status pesanan diterima
+    public function pesananHariIni()
+    {
+        $data = [];
+        // Mendapatkan tanggal sekarang
+        $now = Carbon::now();
+
+        // Mendapatkan tanggal 1 hari setelah hari ini sebagai string tanggal
+        $oneDayLater = $now->copy()->addDay()->toDateString();
+
+        // Mengambil semua transaksi dengan status 'Diterima' dan tanggal_ambil lebih dari 1 hari dari sekarang
+        $transaksis = Transaksi::with('customer')
+            ->where('status_pesanan', 'Diterima')
+            ->where('tanggal_ambil', '=', $oneDayLater)
+            ->get();
+
+        $formattedTransaksis = $transaksis->map(function ($transaksi) {
+            $formattedDate = Carbon::parse($transaksi->tanggal_ambil)->format('y.m');
+            $transaksi->no_nota = $formattedDate . '.' . $transaksi->id;
+            return $transaksi;
+        });
+
+        // serach detail transaksi by id transaksi
+        foreach ($formattedTransaksis as $transaksi) {
+            $detail_transaksi = Detail_transaksi::where('id_transaksi', $transaksi->id)->get();
+            $transaksi->detail_transaksi = $detail_transaksi;
+        }
+
+        // get produk by id_produk from detail transaksi
+        foreach ($formattedTransaksis as $transaksi) {
+            foreach ($transaksi->detail_transaksi as $detail) {
+                $produk = Produk::find($detail->id_produk);
+                $detail->produk = $produk;
+
+                $data[] = [
+                    'id' => $transaksi->id,
+                    'no_nota' => $transaksi->no_nota,
+                    'nama_customer' => $transaksi->customer->nama_customer,
+                    'tanggal_ambil' => $transaksi->tanggal_ambil,
+                    'jam_ambil' => $transaksi->jam_ambil,
+                    'status_pesanan' => $transaksi->status_pesanan,
+                    'produk' => [
+                        'id' => $produk->id,
+                        'nama_produk' => $produk->nama_produk,
+                        'harga' => $produk->harga,
+                        'jumlah_produk' => $detail->jumlah_produk
+                    ]
+                ];
+            }
+        }
+
+        // insert data produk to $data
+        foreach ($formattedTransaksis as $transaksi) {
+            foreach ($transaksi->detail_transaksi as $detail) {
+                $produk = Produk::find($detail->id_produk);
+                $detail->produk = $produk;
+            }
+        }
+
+        return response()->json([
+            'data' => $data
+        ]);
     }
 }

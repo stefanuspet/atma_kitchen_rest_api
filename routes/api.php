@@ -50,7 +50,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/customers/profile', [CustomerController::class, 'getProfile']);
     Route::post('/customers/profile/{id}', [CustomerController::class, 'update']);
     Route::get('/users/profile', [UserController::class, 'getProfile']);
-    Route::get('/users/profile', [UserController::class, 'getProfile']);
     Route::get('/logout', [AuthController::class, 'logout']);
 });
 
@@ -208,6 +207,10 @@ Route::middleware(['auth:sanctum', 'abilities:MO'])->group(function () {
     Route::post('/pembelian_bahan_baku/search', [PembelianBahanBakuController::class, 'getNamaBahanBaku']);
 
     route::get('/cetak_laporan_bb_mo', [BahanBakuController::class, 'laporanstok']);
+    route::post('/cetak_laporan_bulanan_produk_mo', [TransaksiController::class, 'LaporanPenjualanBulanan']);
+
+    // pesanan
+    Route::get('/pesananhariini', [transaksiController::class, 'pesananHariIni']);
 });
 
 // ===============[  role : Owner ] ===============
@@ -222,4 +225,5 @@ Route::middleware(['auth:sanctum', 'abilities:OWNER'])->group(function () {
     Route::delete('/gaji/{id}', [GajiController::class, 'destroy']);
 
     route::get('/cetak_laporan_bb_o', [BahanBakuController::class, 'laporanstok']);
+    route::post('/cetak_laporan_bulanan_produk_Ow', [TransaksiController::class, 'LaporanPenjualanBulanan']);
 });

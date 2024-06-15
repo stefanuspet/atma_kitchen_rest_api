@@ -15,8 +15,11 @@ return new class extends Migration
         Schema::create('detail_transaksis', function (Blueprint $table) {
             $table->unsignedBigInteger("id_transaksi")->nullable(false);
             $table->unsignedBigInteger("id_produk")->nullable(true);
+            $table->integer("jumlah_produk")->nullable(true);
             $table->unsignedBigInteger("id_produk_penitip")->nullable(true);
+            $table->integer("jumlah_produk_penitip")->nullable(true);
             $table->unsignedBigInteger("id_hampers")->nullable(true);
+            $table->integer("jumlah_hampers")->nullable(true);
             $table->timestamps();
 
             $table->foreign("id_transaksi")->on("transaksis")->references("id");

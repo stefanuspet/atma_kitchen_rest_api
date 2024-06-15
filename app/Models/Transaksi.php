@@ -20,8 +20,9 @@ class Transaksi extends Model
         "tanggal_ambil",
         "tanggal_lunas",
         "metode_pembayaran",
-        "status_pembayaran",
-        "status_pengiriman",
+        // "status_pembayaran",
+        // "status_pengiriman",
+        "status_pesanan", // "Belum Dibayar", "Sudah Dibayar", "Sudah Dikirim", "Sudah Diterima
         "jenis_pengiriman",
         "tip",
         "jarak",
