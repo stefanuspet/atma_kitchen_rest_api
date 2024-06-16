@@ -38,7 +38,7 @@ class ResepController extends Controller
         $resep->id_user = $user_id;
         $resep->save();
 
-        // return (new ResepResource($resep))->setMessage('Resep created successfully');
+        //return (new ResepResource($resep))->setMessage('Resep created successfully');
         return response()->json([
             'message' => 'Resep created successfully',
             'data' => $resep

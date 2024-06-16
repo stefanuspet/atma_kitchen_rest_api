@@ -20,5 +20,8 @@ class Detail_transaksi extends Pivot
         "id_produk",
         "id_produk_penitip",
         "id_hampers",
+        "jumlah_produk",
+        "jumlah_produk_penitip",
+        "jumlah_hampers",
     ];
 }

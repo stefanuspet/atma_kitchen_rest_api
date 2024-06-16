@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('konfirmasi_pembayarans', function (Blueprint $table) {
             $table->id();
-            $table->string('daftar_pesanan');
-            $table->decimal('jumlah_pesanan', 10, 2);
-            $table->boolean('konfirmasi')->default(false);
+            $table->unsignedBigInteger('id_transaksi');
+            $table->double('jumlah_pembayaran');
             $table->timestamps();
+
+            $table->foreign('id_transaksi')->references('id')->on('transaksis')->onDelete('cascade');
         });
     }
 

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class KonfirmasiPembayaran extends Model
 {
@@ -13,6 +14,12 @@ class KonfirmasiPembayaran extends Model
     public $incrementing = true;
 
     protected $fillable = [
-        "harga",
+        "id_transaksi",
+        "jumlah_pembayaran",
     ];
+
+    public function transaksi(): BelongsTo
+    {
+        return $this->belongsTo(Transaksi::class, "id_transaksi", "id");
+    }
 }

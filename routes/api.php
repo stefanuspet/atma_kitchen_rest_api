@@ -23,8 +23,6 @@ use App\Http\Controllers\JarakPengirimanController;
 use App\Http\Controllers\KonfirmasiPembayaranController;
 use App\Http\Controllers\KoutaProduksiController;
 use App\Http\Controllers\PesananController;
-use App\Models\Bahan_baku;
-use App\Models\Poin;
 use Illuminate\Support\Facades\Route;
 
 // Authentication
@@ -49,11 +47,10 @@ Route::get('/hampers', [HampersController::class, 'index']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/customers/profile', [CustomerController::class, 'getProfile']);
     Route::post('/customers/profile/{id}', [CustomerController::class, 'update']);
-    Route::get('/users/profile', [UserController::class, 'getProfile']);
+    Route::get('/customers/history', [CustomerController::class, 'show']);
     Route::get('/users/profile', [UserController::class, 'getProfile']);
     Route::get('/logout', [AuthController::class, 'logout']);
 });
-
 
 Route::middleware(['auth:sanctum', 'abilities:Customer'])->group(function () {
     Route::get('/produk_user/{id}', [ProdukController::class, 'show']);
@@ -67,6 +64,7 @@ Route::middleware(['auth:sanctum', 'abilities:Customer'])->group(function () {
 
     Route::post('/checkout', [TransaksiController::class, 'checkout']);
     Route::get('/transaksi_user', [TransaksiController::class, 'index']);
+
     // addproduktodetail
     Route::post('/addProdukToDetail/{id}', [TransaksiController::class, 'addProdukToDetail']);
 
@@ -76,9 +74,6 @@ Route::middleware(['auth:sanctum', 'abilities:Customer'])->group(function () {
     Route::get('/detail_transaksi', [DetailTransaksiController::class, 'getByIdTransaksi']);
     Route::get('/detail_transaksi_all', [DetailTransaksiController::class, 'getAllTransaksi']);
 
-
-
-
     // kuota produksi
     Route::get('/kuota_produksi', [KoutaProduksiController::class, 'index']);
     Route::get('/kuota_produksi/{id}', [KoutaProduksiController::class, 'show']);
@@ -87,6 +82,8 @@ Route::middleware(['auth:sanctum', 'abilities:Customer'])->group(function () {
     Route::put('/kuota_produksi/{id}', [KoutaProduksiController::class, 'update']);
     Route::delete('/kuota_produksi/{id}', [KoutaProduksiController::class, 'destroy']);
     Route::get('/kuota_produksi/tanggal/{tanggal}', [KoutaProduksiController::class, 'showByTanggal']);
+    Route::get('/transaksi_cus', [TransaksiController::class, 'index']);
+    Route::get('/transaksi_cus/search/{id}', [TransaksiController::class, 'search']);
 });
 
 // ===============[ role : Admin ] ===============
@@ -149,14 +146,32 @@ Route::middleware(['auth:sanctum', 'abilities:ADMIN'])->group(function () {
 
     // konfirmasi pembayaran
     Route::get('/konfirmasi_pembayaran', [KonfirmasiPembayaranController::class, 'index']);
-    Route::post('/konfirmasi_pembayaran/{id}/konfirmasi', [KonfirmasiPembayaranController::class, 'konfirmasi']);
-    Route::post('/konfirmasi_pembayaran/{id}/tip', [KonfirmasiPembayaranController::class, 'hitungTip']);
+    Route::post('/konfirmasi_pembayaran', [KonfirmasiPembayaranController::class, 'store']);
     Route::get('/konfirmasi_pembayaran/{id}', [KonfirmasiPembayaranController::class, 'show']);
+    Route::post('/konfirmasi_pembayaran/{id}', [KonfirmasiPembayaranController::class, 'update']);
+    Route::delete('/konfirmasi_pembayaran/{id}', [KonfirmasiPembayaranController::class, 'destroy']);
+    Route::post('/konfirmasi-pembayaran/{id}/hitung-tip', [KonfirmasiPembayaranController::class, 'hitungTip']);
 
     // transaksi
     Route::get('/transaksi', [TransaksiController::class, 'index']);
     Route::put('/transaksi/{id}', [TransaksiController::class, 'updateJarak']);
     Route::get('/transaksi/{id}', [TransaksiController::class, 'show']);
+    // Route::get('/transaksi', [TransaksiController::class, 'getAllTransaksi']);
+    
+    // Route::get('/transaksi/{id}', [TransaksiController::class, 'getStatusById']);
+    Route::put('/transaksi/{id}/status', [TransaksiController::class, 'updateStatus']);
+    Route::put('/transaksi/{id}', [TransaksiController::class, 'updateJarak']);
+
+    Route::get('/transaksi/lunas', [TransaksiController::class, 'getTransaksiLunas']);
+
+    Route::get('/transaksi/pembatalan', [TransaksiController::class, 'getPembatalan']);
+    Route::put('/transaksi/batalkan/{id}', [TransaksiController::class, 'batalkanPembayaran']);
+
+    //Route::get('/transaksi/{id}', [TransaksiController::class, 'show']);
+
+    // // pesanan
+    // Route::get('/pesanan', [PesananController::class, 'index']);
+    // Route::put('/pesanan/{id}/status', [PesananController::class, 'updateStatus']);
 });
 
 // ===============[  role : Manager ] ===============
@@ -207,7 +222,13 @@ Route::middleware(['auth:sanctum', 'abilities:MO'])->group(function () {
     Route::delete('/pembelian_bahan_baku/{id}', [PembelianBahanBakuController::class, 'destroy']);
     Route::post('/pembelian_bahan_baku/search', [PembelianBahanBakuController::class, 'getNamaBahanBaku']);
 
-    route::get('/cetak_laporan_bb_mo', [BahanBakuController::class, 'laporanstok']);
+    Route::get('/cetak_laporan_bb_o', [BahanBakuController::class, 'laporanstok']);
+    Route::get('/laporan_penjualan_bulanan', [TransaksiController::class, 'laporanPenjualanBulanan']);
+    Route::get('/laporan_penggunaan_bahan_baku', [BahanBakuController::class, 'laporanPenggunaanBahanBaku']);
+
+    // pesanan
+    Route::get('/pesananhariini', [transaksiController::class, 'pesananHariIni']);
+    Route::get('/getTransaksi', [transaksiController::class, 'getTransaksi']);
 });
 
 // ===============[  role : Owner ] ===============
@@ -221,5 +242,7 @@ Route::middleware(['auth:sanctum', 'abilities:OWNER'])->group(function () {
     Route::get('/gaji/{id}', [GajiController::class, 'show']);
     Route::delete('/gaji/{id}', [GajiController::class, 'destroy']);
 
-    route::get('/cetak_laporan_bb_o', [BahanBakuController::class, 'laporanstok']);
+    Route::get('/cetak_laporan_bb_o', [BahanBakuController::class, 'laporanstok']);
+    Route::get('/laporan_penjualan_bulanan', [TransaksiController::class, 'laporanPenjualanBulanan']);
+    Route::get('/laporan_penggunaan_bahan_baku', [BahanBakuController::class, 'laporanPenggunaanBahanBaku']);
 });

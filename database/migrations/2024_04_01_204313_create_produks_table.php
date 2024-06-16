@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('produks', function (Blueprint $table) {
             $table->id();
             $table->string("nama_produk")->nullable(false);
-            $table->double("harga_satu_loyang")->nullable(false);
-            $table->double("harga_setengah_loyang")->nullable(false);
+            $table->double("harga")->nullable(false);
             $table->integer("stok_produk")->nullable(false);
             $table->double("max_produksi")->nullable(false);
             $table->string("image")->nullable(false);

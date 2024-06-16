@@ -17,8 +17,9 @@ return new class extends Migration
             $table->date("tanggal_ambil")->nullable(false);
             $table->date("tanggal_lunas")->nullable(true);
             $table->string("metode_pembayaran")->nullable(false);
-            $table->string("status_pembayaran")->nullable(false);
-            $table->string("status_pengiriman")->nullable(true);
+            // $table->string("status_pembayaran")->nullable(false);
+            // $table->string("status_pengiriman")->nullable(true);
+            $table->string('status_pesanan')->nullable(false);
             $table->string("jenis_pengiriman")->nullable(false);
             $table->double("tip")->nullable(true);
             $table->double("jarak")->nullable(true);

@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class KonfirmasiPembayaranResource extends JsonResource
+class JarakPengirimanResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -24,8 +24,13 @@ class KonfirmasiPembayaranResource extends JsonResource
     public function toArray(Request $request): array
     {
         $response = [
-            'id_transaksi' => $this->id,
-            'jumlah_pembayaran' => $this->jumlah_pembayaran,
+            'id_jarak_pengiriman' => $this->id,
+            'tanggal_ambil' => $this->tanggal_ambil,
+            'tanggal_lunas' => $this->tanggal_lunas,
+            'metode_pembayaran' => $this->metode_pembayaran,
+            'status_pembayaran' => $this->status_pembayaran,
+            'status_pengiriman' => $this->status_pengiriman,
+            'jenis_pengiriman' => $this->status_pengiriman,
         ];
 
         if ($this->message) {

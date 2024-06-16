@@ -11,56 +11,77 @@ class KonfirmasiPembayaranController extends Controller
 {
     public function index()
     {
-        $konfirmasiPembayaran = KonfirmasiPembayaran::where('konfirmasi', false)->get();
-        return response()->json($konfirmasiPembayaran);
+        // return KonfirmasiPembayaranResource::collection(KonfirmasiPembayaran::all());
+        return KonfirmasiPembayaranResource::collection(KonfirmasiPembayaran::with('transaksi')->get());
     }
 
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'harga' => 'required|numeric',
+            'id_transaksi' => 'required',
+            'jumlah_pembayaran' => 'required|numeric',
         ]);
 
         $konfirmasiPembayaran = KonfirmasiPembayaran::create($validatedData);
 
-        return (new KonfirmasiPembayaran($konfirmasiPembayaran))->setMessage('Konfirmasi pembayaran created successfully');
+        return (new KonfirmasiPembayaranResource($konfirmasiPembayaran))->setMessage('Konfirmasi pembayaran created successfully');
     }
 
     public function update(Request $request, $id)
     {
         $konfirmasiPembayaran = KonfirmasiPembayaran::findOrFail($id);
-        
+
         $validatedData = $request->validate([
-            'harga' => 'required|numeric',
+            'jumlah_pembayaran' => 'required|numeric',
         ]);
-        
+
+        // $konfirmasiPembayaran->jumlah_pembayaran = $validatedData['jumlah_pembayaran'];
+        // $konfirmasiPembayaran->save();
         $konfirmasiPembayaran->update($validatedData);
 
-        return (new KonfirmasiPembayaranResource($konfirmasiPembayaran))->setMessage('Jarak Pengiriman updated successfully');
+        return response()->json([
+            'message' => 'Konfirmasi pembayaran updated successfully',
+            // 'data' => $konfirmasiPembayaran
+            'data' => new KonfirmasiPembayaranResource($konfirmasiPembayaran)
+        ]);
     }
 
-    public function konfirmasi(Request $request, $id)
-    {
-        $konfirmasiPembayaran = KonfirmasiPembayaran::findOrFail($id);
-        $konfirmasiPembayaran->konfirmasi = true;
-        $konfirmasiPembayaran->save();
+    // public function konfirmasi(Request $request, $id)
+    // {
+    //     $request->validate([
+    //         'jumlah_pembayaran' => 'required|numeric',
+    //     ]);
 
-        return response()->json(['message' => 'Pembayaran dikonfirmasi']);
-    }
+    //     $konfirmasiPembayaran = KonfirmasiPembayaran::findOrFail($id);
+    //     $konfirmasiPembayaran->konfirmasi = true;
+    //     $konfirmasiPembayaran->save();
+
+    //     return response()->json([
+    //         'message' => 'Pembayaran dikonfirmasi',
+    //         'data' => $konfirmasiPembayaran
+    //     ]);
+    // }
 
     public function hitungTip(Request $request, $id)
     {
         $konfirmasiPembayaran = KonfirmasiPembayaran::findOrFail($id);
+        $transaksi = $konfirmasiPembayaran->transaksi;
+
+        if (!$transaksi) {
+            return response()->json(['message' => 'Transaksi tidak ditemukan'], 404);
+        }
+
         $jumlahPembayaran = $request->input('jumlah_pembayaran');
-        $tip = $jumlahPembayaran - $konfirmasiPembayaran->jumlah_pembayaran;
+        $tip = $jumlahPembayaran - $transaksi->harga_total;
 
         return response()->json(['tip' => $tip > 0 ? $tip : 0]);
     }
 
     public function show($id)
     {
-        $konfirmasiPembayaran = KonfirmasiPembayaran::findOrFail($id);
-        return response()->json($konfirmasiPembayaran);
+        // $konfirmasiPembayaran = KonfirmasiPembayaran::findOrFail($id);
+        $konfirmasiPembayaran = KonfirmasiPembayaran::with('transaksi')->findOrFail($id);
+        return (new KonfirmasiPembayaranResource($konfirmasiPembayaran))->setMessage('Konfirmasi pembayaran shown successfully');
     }
 
     public function destroy($id)
@@ -68,6 +89,8 @@ class KonfirmasiPembayaranController extends Controller
         $konfirmasiPembayaran = KonfirmasiPembayaran::findOrFail($id);
         $konfirmasiPembayaran->delete();
 
-        return response()->json(null, 204);
+        return response()->json([
+            'message' => 'Konfirmasi pembayaran deleted successfully'
+        ]);
     }
 }
