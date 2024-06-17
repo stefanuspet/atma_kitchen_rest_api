@@ -158,14 +158,25 @@ class TransaksiController extends Controller
 
     //     $transaksi = Transaksi::find($id);
 
-    //     if ($transaksi) {
-    //         $transaksi->status_pesanan = $validatedData['status_pesanan'];
-    //         $transaksi->save();
-
-    //         return response()->json(['success' => true, 'message' => 'Status updated successfully']);
+    //     if (!$transaksi) {
+    //         return response()->json(['message' => 'Transaksi not found'], 404);
     //     }
 
-    //     return response()->json(['success' => false, 'message' => 'Failed to update status'], 400);
+    //     $transaksi->status_pesanan = $validatedData['status_pesanan'];
+
+    //     if ($request->status_pesanan === 'Selesai') {
+    //         $transaksi->delete();
+    //         return response()->json([
+    //             'message' => 'Transaksi selesai and deleted successfully',
+    //             'data' => null
+    //         ]);
+    //     } else {
+    //         $transaksi->save();
+    //         return response()->json([
+    //             'message' => 'Transaksi updated successfully',
+    //             'data' => $transaksi
+    //         ]);
+    //     }
     // }
 
     public function updateStatus(Request $request, $id)
@@ -181,20 +192,12 @@ class TransaksiController extends Controller
         }
 
         $transaksi->status_pesanan = $validatedData['status_pesanan'];
+        $transaksi->save();
 
-        if ($request->status_pesanan === 'Selesai') {
-            $transaksi->delete();
-            return response()->json([
-                'message' => 'Transaksi selesai and deleted successfully',
-                'data' => null
-            ]);
-        } else {
-            $transaksi->save();
-            return response()->json([
-                'message' => 'Transaksi updated successfully',
-                'data' => $transaksi
-            ]);
-        }
+        return response()->json([
+            'message' => 'Transaksi updated successfully',
+            'data' => $transaksi
+        ]);
     }
 
     public function LaporanPenjualanBulanan(Request $request)

@@ -15,7 +15,7 @@ class TransaksiSeeder extends Seeder
     {
         DB::table('transaksis')->insert([
             [
-                "id" => 1,
+                // "id" => 1,
                 "tanggal_transaksi" => '2020-12-21 00:00:00',
                 "tanggal_ambil" => '2020-12-21 00:00:00',
                 "metode_pembayaran" => 'Transfer',
@@ -30,7 +30,7 @@ class TransaksiSeeder extends Seeder
                 "id_customer" => 1,
             ],
             [
-                "id" => 2,
+                // "id" => 2,
                 "tanggal_transaksi" => '2020-12-22 00:00:00',
                 "tanggal_ambil" => '2020-12-23 00:00:00',
                 "metode_pembayaran" => 'Bank Transfer',
@@ -43,7 +43,7 @@ class TransaksiSeeder extends Seeder
                 "id_customer" => 2,
             ],
             [
-                "id" => 3,
+                // "id" => 3,
                 "tanggal_transaksi" => '2020-12-23 00:00:00',
                 "tanggal_ambil" => '2020-12-24 00:00:00',
                 "metode_pembayaran" => 'Cash',
@@ -56,7 +56,7 @@ class TransaksiSeeder extends Seeder
                 "id_customer" => 3,
             ],
             [
-                "id" => 4,
+                // "id" => 4,
                 "tanggal_transaksi" => '2020-12-24 00:00:00',
                 "tanggal_ambil" => '2020-12-25 00:00:00',
                 "metode_pembayaran" => 'Credit Card',
@@ -69,7 +69,7 @@ class TransaksiSeeder extends Seeder
                 "id_customer" => 1,
             ],
             [
-                "id" => 5,
+                // "id" => 5,
                 "tanggal_transaksi" => '2020-12-25 00:00:00',
                 "tanggal_ambil" => '2020-12-26 00:00:00',
                 "metode_pembayaran" => 'Bank Transfer',
@@ -82,7 +82,7 @@ class TransaksiSeeder extends Seeder
                 "id_customer" => 1,
             ],
             [
-                "id" => 6,
+                // "id" => 6,
                 "tanggal_transaksi" => '2024-5-26 00:00:00',
                 "tanggal_ambil" => '2024-5-27 00:00:00',
                 "metode_pembayaran" => 'Cash',
@@ -95,7 +95,7 @@ class TransaksiSeeder extends Seeder
                 "id_customer" => 3,
             ],
             [
-                "id" => 7,
+                // "id" => 7,
                 "tanggal_transaksi" => '2024-5-27 00:00:00',
                 "tanggal_ambil" => '2024-5-28 00:00:00',
                 "metode_pembayaran" => 'Credit Card',
@@ -108,7 +108,7 @@ class TransaksiSeeder extends Seeder
                 "id_customer" => 1,
             ],
             [
-                "id" => 8,
+                // "id" => 8,
                 "tanggal_transaksi" => '2024-5-28 00:00:00',
                 "tanggal_ambil" => '2024-5-29 00:00:00',
                 "metode_pembayaran" => 'Bank Transfer',
@@ -121,7 +121,7 @@ class TransaksiSeeder extends Seeder
                 "id_customer" => 2,
             ],
             [
-                "id" => 9,
+                // "id" => 9,
                 "tanggal_transaksi" => '2024-5-29 00:00:00',
                 "tanggal_ambil" => '2024-5-30 00:00:00',
                 "metode_pembayaran" => 'Cash',
@@ -134,7 +134,7 @@ class TransaksiSeeder extends Seeder
                 "id_customer" => 3,
             ],
             [
-                "id" => 10,
+                // "id" => 10,
                 "tanggal_transaksi" => '2024-5-30 00:00:00',
                 "tanggal_ambil" => '2024-5-31 00:00:00',
                 "metode_pembayaran" => 'Credit Card',
@@ -148,7 +148,7 @@ class TransaksiSeeder extends Seeder
             ],
             // untuk bulan 6 dan status pesanan Selesai
             [
-                "id" => 11,
+                // "id" => 11,
                 "tanggal_transaksi" => '2024-6-1 00:00:00',
                 "tanggal_ambil" => '2024-6-2 00:00:00',
                 "metode_pembayaran" => 'Bank Transfer',
@@ -161,7 +161,7 @@ class TransaksiSeeder extends Seeder
                 "id_customer" => 2,
             ],
             [
-                "id" => 12,
+                // "id" => 12,
                 "tanggal_transaksi" => '2024-6-2 00:00:00',
                 "tanggal_ambil" => '2024-6-3 00:00:00',
                 "metode_pembayaran" => 'Cash',
@@ -174,7 +174,7 @@ class TransaksiSeeder extends Seeder
                 "id_customer" => 3,
             ],
             [
-                "id" => 13,
+                // "id" => 13,
                 "tanggal_transaksi" => '2024-6-3 00:00:00',
                 "tanggal_ambil" => '2024-6-4 00:00:00',
                 "metode_pembayaran" => 'Credit Card',
@@ -187,7 +187,7 @@ class TransaksiSeeder extends Seeder
                 "id_customer" => 1,
             ],
             [
-                "id" => 14,
+                // "id" => 14,
                 "tanggal_transaksi" => '2024-6-4 00:00:00',
                 "tanggal_ambil" => '2024-6-5 00:00:00',
                 "metode_pembayaran" => 'Bank Transfer',
