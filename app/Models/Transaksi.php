@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Transaksi extends Model
 {
@@ -70,5 +71,10 @@ class Transaksi extends Model
     public function jarakPengiriman(): HasOne
     {
         return $this->hasOne(JarakPengiriman::class, "id_transaksi", "id");
+    }
+
+    public function konfirmasiPembayaran(): HasMany
+    {
+        return $this->hasMany(KonfirmasiPembayaran::class, 'id_transaksi', 'id');
     }
 }

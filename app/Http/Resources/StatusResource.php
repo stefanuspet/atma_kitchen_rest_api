@@ -28,8 +28,7 @@ class JarakPengirimanResource extends JsonResource
             'tanggal_ambil' => $this->tanggal_ambil,
             'tanggal_lunas' => $this->tanggal_lunas,
             'metode_pembayaran' => $this->metode_pembayaran,
-            'status_pembayaran' => $this->status_pembayaran,
-            'status_pengiriman' => $this->status_pengiriman,
+            'status_pesanan' => $this->status_pesanan,
             'jenis_pengiriman' => $this->status_pengiriman,
         ];
 

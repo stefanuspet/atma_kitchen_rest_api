@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\KonfirmasiPembayaran;
+use App\Models\Transaksi;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\KonfirmasiPembayaranResource;
 use Illuminate\Http\Request;
@@ -11,8 +12,11 @@ class KonfirmasiPembayaranController extends Controller
 {
     public function index()
     {
-        // return KonfirmasiPembayaranResource::collection(KonfirmasiPembayaran::all());
-        return KonfirmasiPembayaranResource::collection(KonfirmasiPembayaran::with('transaksi')->get());
+        // Get all KonfirmasiPembayaran records with related Transaksi data
+        $konfirmasiPembayarans = KonfirmasiPembayaran::with('transaksi')->get();
+
+        // Return the data as a resource collection
+        return response()->json(['data' => $konfirmasiPembayarans]);
     }
 
     public function store(Request $request)
@@ -24,7 +28,7 @@ class KonfirmasiPembayaranController extends Controller
 
         $konfirmasiPembayaran = KonfirmasiPembayaran::create($validatedData);
 
-        return (new KonfirmasiPembayaranResource($konfirmasiPembayaran))->setMessage('Konfirmasi pembayaran created successfully');
+        return response()->json(['data' => $konfirmasiPembayaran, 'message' => 'Konfirmasi pembayaran created successfully']);
     }
 
     public function update(Request $request, $id)
@@ -39,28 +43,8 @@ class KonfirmasiPembayaranController extends Controller
         // $konfirmasiPembayaran->save();
         $konfirmasiPembayaran->update($validatedData);
 
-        return response()->json([
-            'message' => 'Konfirmasi pembayaran updated successfully',
-            // 'data' => $konfirmasiPembayaran
-            'data' => new KonfirmasiPembayaranResource($konfirmasiPembayaran)
-        ]);
+        return response()->json(['data' => $konfirmasiPembayaran, 'message' => 'Konfirmasi pembayaran updated successfully']);
     }
-
-    // public function konfirmasi(Request $request, $id)
-    // {
-    //     $request->validate([
-    //         'jumlah_pembayaran' => 'required|numeric',
-    //     ]);
-
-    //     $konfirmasiPembayaran = KonfirmasiPembayaran::findOrFail($id);
-    //     $konfirmasiPembayaran->konfirmasi = true;
-    //     $konfirmasiPembayaran->save();
-
-    //     return response()->json([
-    //         'message' => 'Pembayaran dikonfirmasi',
-    //         'data' => $konfirmasiPembayaran
-    //     ]);
-    // }
 
     public function hitungTip(Request $request, $id)
     {
@@ -79,9 +63,8 @@ class KonfirmasiPembayaranController extends Controller
 
     public function show($id)
     {
-        // $konfirmasiPembayaran = KonfirmasiPembayaran::findOrFail($id);
         $konfirmasiPembayaran = KonfirmasiPembayaran::with('transaksi')->findOrFail($id);
-        return (new KonfirmasiPembayaranResource($konfirmasiPembayaran))->setMessage('Konfirmasi pembayaran shown successfully');
+        return response()->json(['data' => $konfirmasiPembayaran]);
     }
 
     public function destroy($id)
@@ -89,8 +72,46 @@ class KonfirmasiPembayaranController extends Controller
         $konfirmasiPembayaran = KonfirmasiPembayaran::findOrFail($id);
         $konfirmasiPembayaran->delete();
 
+        return response()->json(['message' => 'Konfirmasi pembayaran deleted successfully']);
+    }
+
+    // public function paid()
+    // {
+    //     $konfirmasiPembayarans = KonfirmasiPembayaran::whereHas('transaksi', function ($query) {
+    //         $query->where('status_pesanan', 'Sudah Dibayar');
+    //     })->with('transaksi')->get();
+
+    //     if ($konfirmasiPembayarans->isEmpty()) {
+    //         return response()->json(['message' => 'No transactions found'], 404);
+    //     }
+
+    //     return response()->json(['data' => $konfirmasiPembayarans]);
+    // }
+    public function getSudahBayar()
+    {
+        // Ensure correct status is used for filtering
+        $transaksis = Transaksi::where('status_pesanan', 'Sudah Dibayar')->get();
+
+        if ($transaksis->isEmpty()) {
+            return response()->json(['message' => 'No transactions found'], 404);
+        }
+
         return response()->json([
-            'message' => 'Konfirmasi pembayaran deleted successfully'
+            'data' => $transaksis
         ]);
     }
+
+    // public function getSudahBayar()
+    // {
+    //     // Get all KonfirmasiPembayaran records with related Transaksi data where status_pesanan is 'Sudah Dibayar'
+    //     $konfirmasiPembayarans = KonfirmasiPembayaran::whereHas('transaksi', function ($query) {
+    //         $query->where('status_pesanan', 'Sudah Dibayar');
+    //     })->with('transaksi')->get();
+
+    //     if ($konfirmasiPembayarans->isEmpty()) {
+    //         return response()->json(['message' => 'No transactions found'], 404);
+    //     }
+
+    //     return response()->json(['data' => $konfirmasiPembayarans]);
+    // }
 }

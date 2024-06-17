@@ -156,18 +156,17 @@ Route::middleware(['auth:sanctum', 'abilities:ADMIN'])->group(function () {
     Route::get('/transaksi', [TransaksiController::class, 'index']);
     Route::put('/transaksi/{id}', [TransaksiController::class, 'updateJarak']);
     Route::get('/transaksi/{id}', [TransaksiController::class, 'show']);
-    // Route::get('/transaksi', [TransaksiController::class, 'getAllTransaksi']);
-    
-    // Route::get('/transaksi/{id}', [TransaksiController::class, 'getStatusById']);
-    Route::put('/transaksi/{id}/status', [TransaksiController::class, 'updateStatus']);
-    Route::put('/transaksi/{id}', [TransaksiController::class, 'updateJarak']);
 
-    Route::get('/transaksi/lunas', [TransaksiController::class, 'getTransaksiLunas']);
+    Route::get('/statusTransaksi', [TransaksiController::class, 'getTransaksi']);
+    Route::get('/statusTransaksi/{id}', [TransaksiController::class, 'getStatusById']);
+    Route::put('/statusTransaksi/{id}', [TransaksiController::class, 'updateStatus']);
 
-    Route::get('/transaksi/pembatalan', [TransaksiController::class, 'getPembatalan']);
-    Route::put('/transaksi/batalkan/{id}', [TransaksiController::class, 'batalkanPembayaran']);
+    Route::get('/sudahBayar', [KonfirmasiPembayaranController::class, 'getSudahBayar']);
 
-    //Route::get('/transaksi/{id}', [TransaksiController::class, 'show']);
+    // Route::get('/transaksi/lunas', [TransaksiController::class, 'getTransaksiLunas']);
+
+    // Route::get('/transaksi/pembatalan', [TransaksiController::class, 'getPembatalan']);
+    // Route::put('/transaksi/batalkan/{id}', [TransaksiController::class, 'batalkanPembayaran']);
 
     // // pesanan
     // Route::get('/pesanan', [PesananController::class, 'index']);
@@ -228,7 +227,7 @@ Route::middleware(['auth:sanctum', 'abilities:MO'])->group(function () {
 
     // pesanan
     Route::get('/pesananhariini', [transaksiController::class, 'pesananHariIni']);
-    Route::get('/getTransaksi', [transaksiController::class, 'getTransaksi']);
+    // Route::get('/getTransaksi', [transaksiController::class, 'getTransaksi']);
 });
 
 // ===============[  role : Owner ] ===============
