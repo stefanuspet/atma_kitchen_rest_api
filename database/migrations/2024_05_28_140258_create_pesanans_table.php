@@ -9,17 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        // Schema::create('pesanans', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->string('nama_produk')->nullable(false);
-        //     $table->unsignedBigInteger('id_jarak_pengiriman')->nullable(false);
-        //     $table->timestamps();
+    // public function up(): void
+    // {
+    //     Schema::create('pesanans', function (Blueprint $table) {
+    //         $table->id();
+    //         $table->string('nama_produk')->nullable(false);
+    //         $table->unsignedBigInteger('id_jarak_pengiriman')->nullable(false);
+    //         $table->timestamps();
 
-        //     $table->foreign("id_jarak_pengiriman")->on("jarak_pengirimans")->references("id")->onDelete("cascade");
-        // });
-    }
+    //         $table->foreign("id_jarak_pengiriman")->on("jarak_pengirimans")->references("id")->onDelete("cascade");
+    //     });
+    // }
 
     /**
      * Reverse the migrations.

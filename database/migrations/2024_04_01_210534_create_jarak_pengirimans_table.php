@@ -8,23 +8,29 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
-        // Schema::create('jarak_pengirimans', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->float('jarak')->nullable(false);
-        //     $table->integer('harga')->nullable(false);
-        //     $table->integer('waktu')->nullable(false);
-        //     $table->timestamps();
-        // });
+        Schema::create('jarak_pengirimen', function (Blueprint $table) {
+            $table->id();
+            $table->float('jarak');
+            $table->integer('waktu');
+            $table->float('harga');
+
+            $table->foreignId('id_transaksi')->constrained('transaksis')->onDelete('cascade');
+            $table->timestamps();
+        });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('jarak_pengirimans');
+        Schema::dropIfExists('jarak_pengirimen');
     }
 };

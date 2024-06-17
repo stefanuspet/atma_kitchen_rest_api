@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Transaksi extends Model
 {
     protected $table = "transaksis";
     protected $primaryKey = "id";
-    protected $keyType = "int";
+    protected $keyType = "string";
     public $timestamps = true;
     public $incrementing = false;
 
@@ -64,5 +66,15 @@ class Transaksi extends Model
     public function packaging(): BelongsTo
     {
         return $this->belongsTo(Packaging::class, "id_packaging", "id");
+    }
+
+    public function jarakPengiriman(): HasOne
+    {
+        return $this->hasOne(JarakPengiriman::class, "id_transaksi", "id");
+    }
+
+    public function konfirmasiPembayaran(): HasMany
+    {
+        return $this->hasMany(KonfirmasiPembayaran::class, 'id_transaksi', 'id');
     }
 }

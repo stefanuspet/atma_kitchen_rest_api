@@ -2,26 +2,25 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class JarakPengiriman extends Model
 {
-    protected $table = "jarak_pengirimans";
-    protected $primaryKey = "id";
-    protected $keyType = "int";
-    public $timestamps = true;
-    public $incrementing = true;
+    use HasFactory;
+
+    protected $table = 'jarak_pengirimen';
 
     protected $fillable = [
-        "jarak",
-        "harga",
-        "waktu",
+        'jarak',
+        'waktu',
+        'harga',
+        'id_transaksi',
     ];
 
-    public function pesanan(): HasMany
+    public function transaksi(): BelongsTo
     {
-        return $this->hasMany(Pesanan::class, "id_jarak_pengiriman", "id");
+        return $this->belongsTo(Transaksi::class, "id_transaksi", "id");
     }
 }

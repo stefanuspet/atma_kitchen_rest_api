@@ -34,7 +34,6 @@ class TransaksiController extends Controller
             'harga_total' => 'required|numeric|min:0',
         ]);
 
-
         $transaksi = new Transaksi();
         $transaksi->tanggal_transaksi = date('Y-m-d H:i');
         $transaksi->tanggal_ambil = $request->tanggal_ambil;
@@ -246,6 +245,92 @@ class TransaksiController extends Controller
 
         return response()->json([
             'data' => $data
+        ]);
+    }
+
+    public function getTransaksi()
+    {
+        $statuses = ['Sudah Dibayar', 'Siap di Pick-Up', 'Sudah di Pick-Up', 'Sedang Dikirim'];
+        $transaksi = Transaksi::whereIn('status_pesanan', $statuses)->get();
+        return response()->json($transaksi);
+    }
+
+    public function getStatusById($id)
+    {
+        $statuses = ['Sudah Dibayar', 'Siap di Pick-Up', 'Sudah di Pick-Up', 'Sedang Dikirim'];
+        $transaksi = Transaksi::where('id', $id)->whereIn('status_pesanan', $statuses)->first();
+
+        if (!$transaksi) {
+            return response()->json(['message' => 'Transaksi not found or not in specified statuses'], 404);
+        }
+
+        return response()->json($transaksi);
+    }
+
+    // public function updateStatus(Request $request, $id)
+    // {
+    //     $validatedData = $request->validate([
+    //         'status_pesanan' => 'required|string',
+    //     ]);
+
+    //     $transaksi = Transaksi::find($id);
+
+    //     if ($transaksi) {
+    //         $transaksi->status_pesanan = $validatedData['status_pesanan'];
+    //         $transaksi->save();
+
+    //         return response()->json(['success' => true, 'message' => 'Status updated successfully']);
+    //     }
+
+    //     return response()->json(['success' => false, 'message' => 'Failed to update status'], 400);
+    // }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'status_pesanan' => 'required|string',
+        ]);
+
+        $transaksi = Transaksi::find($id);
+
+        if (!$transaksi) {
+            return response()->json(['message' => 'Transaksi not found'], 404);
+        }
+
+        $transaksi->status_pesanan = $validatedData['status_pesanan'];
+
+        if ($request->status_pesanan === 'Selesai') {
+            $transaksi->delete();
+            return response()->json([
+                'message' => 'Transaksi selesai and deleted successfully',
+                'data' => null
+            ]);
+        } else {
+            $transaksi->save();
+            return response()->json([
+                'message' => 'Transaksi updated successfully',
+                'data' => $transaksi
+            ]);
+        }
+    }
+
+    
+
+    // menampilkan status pesanan diterima
+    
+
+    // New method to get only "Sudah Dibayar" transactions
+    public function getSudahBayar()
+    {
+        // Ensure correct status is used for filtering
+        $transaksis = Transaksi::where('status_pesanan', 'Sudah Dibayar')->get();
+
+        if ($transaksis->isEmpty()) {
+            return response()->json(['message' => 'No transactions found'], 404);
+        }
+
+        return response()->json([
+            'data' => $transaksis
         ]);
     }
 }

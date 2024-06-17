@@ -4,41 +4,43 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pesanan;
+use App\Models\Transaksi;
+use App\Models\JarakPengiriman;
 use App\Http\Resources\PesananResource;
 use Illuminate\Http\Request;
-
 
 class JarakPengirimanController extends Controller
 {
     public function index()
     {
-        return PesananResource::collection(Pesanan::all());
+        return PesananResource::collection(JarakPengiriman::all());
     }
 
     public function store(Request $request)
     {
         $validatedData = $request->validate([
             'jarak' => 'required|numeric',
-            'waktu' => 'required|integer'
+            'waktu' => 'required|integer',
+            'id_transaksi' => 'required|exists:transaksis,id'
         ]);
 
         $validatedData['harga'] = $this->calculatePrice($validatedData['jarak']);
 
-        $jarakPengiriman = Pesanan::create($validatedData);
+        $jarakPengiriman = JarakPengiriman::create($validatedData);
 
         return (new PesananResource($jarakPengiriman))->setMessage('Jarak Pengiriman created successfully');
     }
 
     public function show($id)
     {
-        $jarakPengiriman = Pesanan::findOrFail($id);
+        $jarakPengiriman = JarakPengiriman::findOrFail($id);
 
         return (new PesananResource($jarakPengiriman))->setMessage('Jarak Pengiriman shown successfully');
     }
 
     public function update(Request $request, $id)
     {
-        $jarakPengiriman = Pesanan::findOrFail($id);
+        $jarakPengiriman = JarakPengiriman::findOrFail($id);
         
         $validatedData = $request->validate([
             'jarak' => 'required|numeric',
@@ -52,9 +54,9 @@ class JarakPengirimanController extends Controller
         return (new PesananResource($jarakPengiriman))->setMessage('Jarak Pengiriman updated successfully');
     }
 
-    public function destroy($id)
+   public function destroy($id)
     {
-        $jarakPengiriman = Pesanan::findOrFail($id);
+        $jarakPengiriman = JarakPengiriman::findOrFail($id);
         $jarakPengiriman->delete();
 
         return response()->json(null, 204);
