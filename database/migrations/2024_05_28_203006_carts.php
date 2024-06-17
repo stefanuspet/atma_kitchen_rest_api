@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger("id_hampers")->nullable(true);
             $table->unsignedBigInteger("id_produk_penitip")->nullable(true);
             $table->integer("jumlah_produk")->nullable(false);
-            $table->string("loyang")->nullable(true);
+            // $table->string("loyang")->nullable(true);
             $table->integer("total")->nullable(false);
             $table->timestamps();
 

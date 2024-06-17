@@ -227,10 +227,11 @@ Route::middleware(['auth:sanctum', 'abilities:MO'])->group(function () {
     Route::delete('/pembelian_bahan_baku/{id}', [PembelianBahanBakuController::class, 'destroy']);
     Route::post('/pembelian_bahan_baku/search', [PembelianBahanBakuController::class, 'getNamaBahanBaku']);
 
-    Route::get('/cetak_laporan_bb_o', [BahanBakuController::class, 'laporanstok']);
+    Route::get('/cetak_laporan_bb_mo', [BahanBakuController::class, 'laporanstok']);
     route::post('/cetak_laporan_bulanan_produk_mo', [TransaksiController::class, 'LaporanPenjualanBulanan']);
 
     // pesanan
+    // Route::get('/cetak_laporan_bb_mo', [BahanBakuController::class, 'laporanstok']);
     Route::get('/pesananhariini', [transaksiController::class, 'pesananHariIni']);
     Route::get('/laporan_penjualan_bulanan', [TransaksiController::class, 'laporanPenjualanBulanan']);
     Route::get('/laporan_penggunaan_bahan_baku', [BahanBakuController::class, 'laporanPenggunaanBahanBaku']);

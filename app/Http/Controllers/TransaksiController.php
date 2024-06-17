@@ -38,8 +38,8 @@ class TransaksiController extends Controller
         $transaksi->tanggal_transaksi = date('Y-m-d H:i');
         $transaksi->tanggal_ambil = $request->tanggal_ambil;
         $transaksi->metode_pembayaran = $request->metode_pembayaran;
-        $transaksi->status_pembayaran = "Belum Dibayar";
-        $transaksi->status_pengiriman = $request->status_pengiriman;
+        $transaksi->status_pesanan = "Belum Dibayar";
+        // $transaksi->status_pengiriman = $request->status_pengiriman;
         $transaksi->jenis_pengiriman = $request->jenis_pengiriman;
         $transaksi->tip = $request->tip;
         $transaksi->ongkir = $request->ongkir;

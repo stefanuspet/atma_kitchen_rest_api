@@ -19,7 +19,7 @@ class Cart extends Model
         'id_hampers',
         'id_produk_penitip',
         'total',
-        "loyang",
+        // "loyang",
         'jumlah_produk',
     ];
 

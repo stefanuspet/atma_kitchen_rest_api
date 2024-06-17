@@ -13,7 +13,16 @@ class Pengeluaran_lain extends Model
     public $timestamps = true;
     public $incrementing = true;
 
-    public function user(): BelongsTo {
+    protected $fillable = [
+        "id_pengeluaran_lain",
+        "nama_pengeluaran",
+        "total_pengeluaran",
+        "tanggal_pengeluaran",
+        "keterangan",
+    ];
+
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class, "id_user", "id");
     }
 }
