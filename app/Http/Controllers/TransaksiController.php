@@ -170,8 +170,8 @@ class TransaksiController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
-        $request->validate([
-            'status_pesanan' => 'required',
+        $validatedData = $request->validate([
+            'status_pesanan' => 'required|string',
         ]);
 
         $transaksi = Transaksi::find($id);
@@ -180,9 +180,9 @@ class TransaksiController extends Controller
             return response()->json(['message' => 'Transaksi not found'], 404);
         }
 
-        $transaksi->status_pesanan = $request->status_pesanan;
+        $transaksi->status_pesanan = $validatedData['status_pesanan'];
 
-        if ($request->status_pesanan === 'selesai') {
+        if ($request->status_pesanan === 'Selesai') {
             $transaksi->delete();
             return response()->json([
                 'message' => 'Transaksi selesai and deleted successfully',
