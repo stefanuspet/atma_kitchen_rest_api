@@ -150,35 +150,6 @@ class TransaksiController extends Controller
         return response()->json($transaksi);
     }
 
-    // public function updateStatus(Request $request, $id)
-    // {
-    //     $validatedData = $request->validate([
-    //         'status_pesanan' => 'required|string',
-    //     ]);
-
-    //     $transaksi = Transaksi::find($id);
-
-    //     if (!$transaksi) {
-    //         return response()->json(['message' => 'Transaksi not found'], 404);
-    //     }
-
-    //     $transaksi->status_pesanan = $validatedData['status_pesanan'];
-
-    //     if ($request->status_pesanan === 'Selesai') {
-    //         $transaksi->delete();
-    //         return response()->json([
-    //             'message' => 'Transaksi selesai and deleted successfully',
-    //             'data' => null
-    //         ]);
-    //     } else {
-    //         $transaksi->save();
-    //         return response()->json([
-    //             'message' => 'Transaksi updated successfully',
-    //             'data' => $transaksi
-    //         ]);
-    //     }
-    // }
-
     public function updateStatus(Request $request, $id)
     {
         $validatedData = $request->validate([

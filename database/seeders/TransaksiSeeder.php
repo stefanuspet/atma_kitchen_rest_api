@@ -15,7 +15,6 @@ class TransaksiSeeder extends Seeder
     {
         DB::table('transaksis')->insert([
             [
-                // "id" => 1,
                 "tanggal_transaksi" => '2020-12-21 00:00:00',
                 "tanggal_ambil" => '2020-12-21 00:00:00',
                 "metode_pembayaran" => 'Transfer',
@@ -30,7 +29,6 @@ class TransaksiSeeder extends Seeder
                 "id_customer" => 1,
             ],
             [
-                // "id" => 2,
                 "tanggal_transaksi" => '2020-12-22 00:00:00',
                 "tanggal_ambil" => '2020-12-23 00:00:00',
                 "metode_pembayaran" => 'Bank Transfer',
@@ -43,7 +41,6 @@ class TransaksiSeeder extends Seeder
                 "id_customer" => 2,
             ],
             [
-                // "id" => 3,
                 "tanggal_transaksi" => '2020-12-23 00:00:00',
                 "tanggal_ambil" => '2020-12-24 00:00:00',
                 "metode_pembayaran" => 'Cash',
@@ -56,7 +53,6 @@ class TransaksiSeeder extends Seeder
                 "id_customer" => 3,
             ],
             [
-                // "id" => 4,
                 "tanggal_transaksi" => '2020-12-24 00:00:00',
                 "tanggal_ambil" => '2020-12-25 00:00:00',
                 "metode_pembayaran" => 'Credit Card',
@@ -69,7 +65,6 @@ class TransaksiSeeder extends Seeder
                 "id_customer" => 1,
             ],
             [
-                // "id" => 5,
                 "tanggal_transaksi" => '2020-12-25 00:00:00',
                 "tanggal_ambil" => '2020-12-26 00:00:00',
                 "metode_pembayaran" => 'Bank Transfer',
@@ -82,11 +77,10 @@ class TransaksiSeeder extends Seeder
                 "id_customer" => 1,
             ],
             [
-                // "id" => 6,
                 "tanggal_transaksi" => '2024-5-26 00:00:00',
                 "tanggal_ambil" => '2024-5-27 00:00:00',
                 "metode_pembayaran" => 'Cash',
-                "status_pesanan" => 'Sudah Dibayar',
+                "status_pesanan" => 'Selesai',
                 "jenis_pengiriman" => 'Pickup',
                 "potongan_poin" => 80,
                 "poin_pesanan" => 400,
@@ -95,11 +89,10 @@ class TransaksiSeeder extends Seeder
                 "id_customer" => 3,
             ],
             [
-                // "id" => 7,
                 "tanggal_transaksi" => '2024-5-27 00:00:00',
                 "tanggal_ambil" => '2024-5-28 00:00:00',
                 "metode_pembayaran" => 'Credit Card',
-                "status_pesanan" => 'Siap Dipick-Up',
+                "status_pesanan" => 'Selesai',
                 "jenis_pengiriman" => 'Ojol',
                 "potongan_poin" => 40,
                 "poin_pesanan" => 200,
@@ -108,11 +101,10 @@ class TransaksiSeeder extends Seeder
                 "id_customer" => 1,
             ],
             [
-                // "id" => 8,
                 "tanggal_transaksi" => '2024-5-28 00:00:00',
                 "tanggal_ambil" => '2024-5-29 00:00:00',
                 "metode_pembayaran" => 'Bank Transfer',
-                "status_pesanan" => 'Sudah Dibayar',
+                "status_pesanan" => 'Selesai',
                 "jenis_pengiriman" => 'Kurir',
                 "potongan_poin" => 90,
                 "poin_pesanan" => 450,
@@ -121,11 +113,10 @@ class TransaksiSeeder extends Seeder
                 "id_customer" => 2,
             ],
             [
-                // "id" => 9,
                 "tanggal_transaksi" => '2024-5-29 00:00:00',
                 "tanggal_ambil" => '2024-5-30 00:00:00',
                 "metode_pembayaran" => 'Cash',
-                "status_pesanan" => 'Sudah Dibayar',
+                "status_pesanan" => 'Selesai',
                 "jenis_pengiriman" => 'Pickup',
                 "potongan_poin" => 60,
                 "poin_pesanan" => 300,
@@ -134,11 +125,10 @@ class TransaksiSeeder extends Seeder
                 "id_customer" => 3,
             ],
             [
-                // "id" => 10,
                 "tanggal_transaksi" => '2024-5-30 00:00:00',
                 "tanggal_ambil" => '2024-5-31 00:00:00',
                 "metode_pembayaran" => 'Credit Card',
-                "status_pesanan" => 'Sudah Dipick-Up',
+                "status_pesanan" => 'Selesai',
                 "jenis_pengiriman" => 'Ojol',
                 "potongan_poin" => 10,
                 "poin_pesanan" => 50,
@@ -148,7 +138,6 @@ class TransaksiSeeder extends Seeder
             ],
             // untuk bulan 6 dan status pesanan Selesai
             [
-                // "id" => 11,
                 "tanggal_transaksi" => '2024-6-1 00:00:00',
                 "tanggal_ambil" => '2024-6-2 00:00:00',
                 "metode_pembayaran" => 'Bank Transfer',
@@ -161,7 +150,6 @@ class TransaksiSeeder extends Seeder
                 "id_customer" => 2,
             ],
             [
-                // "id" => 12,
                 "tanggal_transaksi" => '2024-6-2 00:00:00',
                 "tanggal_ambil" => '2024-6-3 00:00:00',
                 "metode_pembayaran" => 'Cash',
@@ -174,7 +162,6 @@ class TransaksiSeeder extends Seeder
                 "id_customer" => 3,
             ],
             [
-                // "id" => 13,
                 "tanggal_transaksi" => '2024-6-3 00:00:00',
                 "tanggal_ambil" => '2024-6-4 00:00:00',
                 "metode_pembayaran" => 'Credit Card',
@@ -187,7 +174,6 @@ class TransaksiSeeder extends Seeder
                 "id_customer" => 1,
             ],
             [
-                // "id" => 14,
                 "tanggal_transaksi" => '2024-6-4 00:00:00',
                 "tanggal_ambil" => '2024-6-5 00:00:00',
                 "metode_pembayaran" => 'Bank Transfer',
@@ -199,30 +185,6 @@ class TransaksiSeeder extends Seeder
                 "harga_total" => 300000,
                 "id_customer" => 2,
             ],
-            // [
-            //     "tanggal_transaksi" => '2024-6-5 00:00:00',
-            //     "tanggal_ambil" => '2024-6-6 00:00:00',
-            //     "metode_pembayaran" => 'Bank Transfer',
-            //     "status_pesanan" => 'Belum Bayar',
-            //     "jenis_pengiriman" => 'Kurir',
-            //     "potongan_poin" => 10,
-            //     "poin_pesanan" => 200,
-            //     "harga_setelah_poin" => 20000,
-            //     "harga_total" => 200000,
-            //     "id_customer" => 2,
-            // ],
-            // [
-            //     "tanggal_transaksi" => '2024-6-6 00:00:00',
-            //     "tanggal_ambil" => '2024-6-7 00:500:00',
-            //     "metode_pembayaran" => 'Cash',
-            //     "status_pesanan" => 'Siap Dipick-Up',
-            //     "jenis_pengiriman" => 'Kurir',
-            //     "potongan_poin" => 20,
-            //     "poin_pesanan" => 250,
-            //     "harga_setelah_poin" => 25000,
-            //     "harga_total" => 250000,
-            //     "id_customer" => 1,
-            // ]
         ]);
     }
 }
