@@ -22,6 +22,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\JarakPengirimanController;
 use App\Http\Controllers\KonfirmasiPembayaranController;
 use App\Http\Controllers\KoutaProduksiController;
+use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\PenarikanSaldoController;
 use App\Http\Controllers\PesananController;
 use Illuminate\Support\Facades\Route;
 
@@ -174,6 +176,10 @@ Route::middleware(['auth:sanctum', 'abilities:ADMIN'])->group(function () {
     // // pesanan
     // Route::get('/pesanan', [PesananController::class, 'index']);
     // Route::put('/pesanan/{id}/status', [PesananController::class, 'updateStatus']);
+
+    // penarikan saldo
+    Route::get('/penarikan_saldo', [PenarikanSaldoController::class, 'index']);
+    Route::put('/penarikan_saldo/{id}', [PenarikanSaldoController::class, 'updateTrasfered']);
 });
 
 // ===============[  role : Manager ] ===============
@@ -224,15 +230,14 @@ Route::middleware(['auth:sanctum', 'abilities:MO'])->group(function () {
     Route::delete('/pembelian_bahan_baku/{id}', [PembelianBahanBakuController::class, 'destroy']);
     Route::post('/pembelian_bahan_baku/search', [PembelianBahanBakuController::class, 'getNamaBahanBaku']);
 
-    Route::get('/cetak_laporan_bb_o', [BahanBakuController::class, 'laporanstok']);
+    Route::get('/cetak_laporan_bb_mo', [BahanBakuController::class, 'laporanstok']);
     route::post('/cetak_laporan_bulanan_produk_mo', [TransaksiController::class, 'LaporanPenjualanBulanan']);
 
     // pesanan
+    // Route::get('/cetak_laporan_bb_mo', [BahanBakuController::class, 'laporanstok']);
     Route::get('/pesananhariini', [transaksiController::class, 'pesananHariIni']);
     Route::get('/laporan_penjualan_bulanan', [TransaksiController::class, 'laporanPenjualanBulanan']);
     Route::get('/laporan_penggunaan_bahan_baku', [BahanBakuController::class, 'laporanPenggunaanBahanBaku']);
-
-  
 });
 
 // ===============[  role : Owner ] ===============
@@ -251,3 +256,8 @@ Route::middleware(['auth:sanctum', 'abilities:OWNER'])->group(function () {
     Route::get('/laporan_penjualan_bulanan', [TransaksiController::class, 'laporanPenjualanBulanan']);
     Route::get('/laporan_penggunaan_bahan_baku', [BahanBakuController::class, 'laporanPenggunaanBahanBaku']);
 });
+
+// laporan
+Route::get('/laporan/presensi-dan-gaji-pegawai', [LaporanController::class, 'presensiGaji']);
+Route::get('/laporan/pemasukan-dan-pengeluaran-bulanan/{month}/{year}', [LaporanController::class, 'pemasukanPengeluaran']);
+Route::get('/laporan/rekap-transaksi-penitip/{month}/{year}', [LaporanController::class, 'rekapTransaksiPenitip']);

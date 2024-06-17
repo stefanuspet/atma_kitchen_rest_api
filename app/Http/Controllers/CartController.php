@@ -15,6 +15,11 @@ class CartController extends Controller
     {
         $cart = Cart::where('id_customer', Auth::user()->id)->get();
 
+        // if cart is empty
+        if ($cart->isEmpty()) {
+            return response()->json(['message' => 'Cart is empty'], 200);
+        }
+
         // find produk
         foreach ($cart as $c) {
             if ($c->id_produk) {
@@ -45,18 +50,17 @@ class CartController extends Controller
             'id_hampers' => 'nullable|exists:hampers,id',
             'id_produk_penitip' => 'nullable|exists:produk_penitips,id',
             'jumlah_produk' => 'required|integer|min:1',
-            'loyang' => 'nullable|string',
         ]);
 
         // Jika hanya produk yang ditambahkan
         if ($request->has('id_produk')) {
             $produk = Produk::find($validatedData['id_produk']);
             // Pengecekan loyang hanya berlaku untuk produk
-            if ($produk && $validatedData['loyang']) {
+            if ($produk) {
                 // Jika loyang = "satu", gunakan harga_satu_loyang
                 // Jika loyang = "setengah", gunakan harga_setengah_loyang
-                $hargaProduk = ($validatedData['loyang'] == 'satu') ? $produk->harga_satu_loyang : $produk->harga_setengah_loyang;
-                $validatedData['total'] = $validatedData['jumlah_produk'] * $hargaProduk;
+                // $hargaProduk = ($validatedData['loyang'] == 'satu') ? $produk->harga_satu_loyang : $produk->harga_setengah_loyang;
+                $validatedData['total'] = $validatedData['jumlah_produk'] * $produk->harga;
             }
         }
 
@@ -71,7 +75,7 @@ class CartController extends Controller
                     $query->orWhere('id_produk_penitip', $validatedData['id_produk_penitip']);
                 }
             })
-            ->where('loyang', $validatedData['loyang'])
+            // ->where('loyang', $validatedData['loyang'])
             ->first();
 
         if ($cartItem) {
@@ -87,7 +91,7 @@ class CartController extends Controller
                 'id_hampers' => isset($validatedData['id_hampers']) ? $validatedData['id_hampers'] : null,
                 'id_produk_penitip' => isset($validatedData['id_produk_penitip']) ? $validatedData['id_produk_penitip'] : null,
                 'jumlah_produk' => $validatedData['jumlah_produk'],
-                'loyang' => $validatedData['loyang'],
+                // 'loyang' => $validatedData['loyang'],
                 'total' => $validatedData['total'],
             ]);
         }
@@ -124,11 +128,12 @@ class CartController extends Controller
 
         if ($produk) {
             if ($cart->id_produk) {
-                if ($cart->loyang == "satu") {
-                    $cart->total = $cart->jumlah_produk * $produk->harga_satu_loyang;
-                } else {
-                    $cart->total = $cart->jumlah_produk * $produk->harga_setengah_loyang;
-                }
+                // if ($cart->loyang == "satu") {
+                //     $cart->total = $cart->jumlah_produk * $produk->harga_satu_loyang;
+                // } else {
+                //     $cart->total = $cart->jumlah_produk * $produk->harga_setengah_loyang;
+                // }
+                $cart->total = $cart->jumlah_produk * $produk->harga;
             } else if ($request->id_produk_penitip) {
                 $cart->total = $request->jumlah_produk * $request->produk_penitip->harga;
             } else if ($request->id_hampers) {
