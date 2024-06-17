@@ -82,8 +82,11 @@ Route::middleware(['auth:sanctum', 'abilities:Customer'])->group(function () {
     Route::put('/kuota_produksi/{id}', [KoutaProduksiController::class, 'update']);
     Route::delete('/kuota_produksi/{id}', [KoutaProduksiController::class, 'destroy']);
     Route::get('/kuota_produksi/tanggal/{tanggal}', [KoutaProduksiController::class, 'showByTanggal']);
+    
     Route::get('/transaksi_cus', [TransaksiController::class, 'index']);
-    Route::get('/transaksi_cus/search/{id}', [TransaksiController::class, 'search']);
+    // Route::get('/transaksi_cus/search/{id}', [TransaksiController::class, 'search']);
+    Route::get('/transaksi_cus/search/{id}', [TransaksiController::class, 'customerSearch']);
+    Route::put('/transaksi_cus/{id}', [TransaksiController::class, 'updateStatus']);
 });
 
 // ===============[ role : Admin ] ===============

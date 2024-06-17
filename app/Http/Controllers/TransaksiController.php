@@ -8,6 +8,7 @@ use App\Models\Poin;
 use App\Models\Produk;
 use App\Models\Produk_penitip;
 use App\Models\Transaksi;
+use App\Http\Resources\TransaksiResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -302,4 +303,34 @@ class TransaksiController extends Controller
             'data' => $transaksis
         ]);
     }
+
+    public function customerSearch()
+    {
+        $transaksi = Transaksi::where('id', request('id'))->get();
+        return response()->json([
+            'data' => $transaksi
+        ], 200);
+    }
+
+    // public function getStatusCustomerById(Request $request, $id)
+    // {
+    //     // $statuses = ['Sudah Dibayar', 'Siap di Pick-Up', 'Sudah di Pick-Up', 'Sedang Dikirim'];
+    //     // $customerid = Auth::user()->id;
+    //     // $transaksi = Transaksi::where('id_customer', $customerid)->get();
+    //     $transaksi = Transaksi::findOrFail($id);
+
+    //     $request->validate([
+    //         'status_pesanan' => 'required'
+    //     ]);
+
+    //     $transaksi->status_pesanan = $request->status_pesanan;
+    //     $transaksi->save();
+
+    //     return (new TransaksiResource($transaksi))->setMessage('Karyawan updated successfully');
+    //     // if (!$transaksi) {
+    //     //     return response()->json(['message' => 'Transaksi not found or not in specified statuses'], 404);
+    //     // }
+
+    //     // return response()->json($transaksi);
+    // }
 }
